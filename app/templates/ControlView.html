@@ -1,0 +1,14 @@
+<div class="control" >
+    <div class="content-control" >
+        <a href="#" class="prev">&laquo;</a>
+        {{#if isRunning}}
+        <a href="#" class="pause" >||</a>
+        {{else}}
+        <a href="#" class="play" >&#9658;</a>
+        {{/if}}
+        <a href="#" class="next" >&raquo;</a>
+    </div>
+    <div>
+        <span class="time">{{seconds}}</span>s
+    </div>
+</div>

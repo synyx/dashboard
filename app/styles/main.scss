@@ -1,0 +1,98 @@
+$icon-font-path: "/bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+
+@import 'bootstrap-sass-official/assets/stylesheets/bootstrap.scss';
+
+html,body {
+  font-family: OpenSansRegular, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  background-color: #DFE0E1;
+  margin: 0;
+}
+
+a {
+  color: #000000;
+  background-color: #B2C900;
+  border: 1px solid #B2C900;;
+  border-radius: 0.2em;
+  text-align: center;
+  text-decoration: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 2px;
+}
+
+a:hover {
+  background-color: #D8E47F;
+}
+
+.logo {
+  background: url("../images/logo.png") no-repeat;
+}
+
+.header-container {
+  background-color: #B2C900;
+  text-align: center;
+  font-size: 2.5em;
+  border: 1px solid #D8E47F;
+  text-shadow: -2px 2px 3px #636363;
+}
+
+.control {
+  text-align: center;
+}
+
+.header {
+  padding: 10px;
+  overflow: auto;
+}
+
+.control-container {
+  float: left;
+}
+
+.logo-container {
+  margin-bottom: 30px;
+}
+
+.logo {
+  float: right;
+  height: 65px;
+  width: 130px;
+}
+
+.content-container {
+  padding: 15px;
+  overflow: auto;
+}
+
+.content {
+  padding: 15px;
+  border: 1px solid #B2C900;
+  border-radius: 0.2em;
+  width: 97%;
+  font-size: 1.5em;
+}
+
+.content-control {
+  margin: 5px;
+}
+
+.content-control a {
+  margin: 0;
+}
+
+.status-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 5px;
+  margin: 10px;
+  background-color: #d8d2c9;
+  text-align: center;
+  border: 1px solid #B2C900;
+  border-radius: 2px;
+}
+
+table {
+  border: none;
+}
