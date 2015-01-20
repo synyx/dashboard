@@ -5,8 +5,8 @@ define([
 
     return Backbone.Model.extend({
         defaults: {
-            current: 1,
-            total: 1
+            current: undefined,
+            total: undefined
         }
     });
 });

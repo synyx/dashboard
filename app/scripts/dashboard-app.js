@@ -1,134 +1,140 @@
 define([
     'backbone',
-    'models/content-collection',
+    'models/source-collection',
     'models/status-model',
     'models/timer-model',
+    'models/source',
+    'models/header',
     'models/content',
-    'models/dash-model',
-    'models/content-provider',
-    'models/content-filter',
-    'models/timer',
-    'views/dash-view'
-], function (Backbone, ContentCollection, StatusModel, TimerModel, ContentModel, DashModel, ContentProvider, ContentFilter, Timer, DashView) {
+    'models/dashboard-model',
+    'views/dashboard-view',
+    'services/source-provider',
+    'services/source-filter',
+    'services/timer'
+], function (Backbone, SourceCollection, StatusModel, TimerModel, SourceModel, HeaderModel, ContentModel, DashboardModel,
+             DashboardView,
+             SourceProvider, SourceFilter, Timer) {
     'use strict';
 
     return Backbone.Model.extend({
 
         defaults: {
-            dashModel: undefined,
-            dashView: undefined,
-
-            tagString: '',
-            contentList: new ContentCollection(),
-            status: new StatusModel(),
+            tagString: undefined,
+            sources: new SourceCollection(),
+            headerModel: new HeaderModel(),
+            contentModel: new ContentModel(),
+            statusModel: new StatusModel(),
             timerModel: new TimerModel()
         },
 
         initialize: function () {
-            _.bindAll(this, 'contentLoaded', 'contentLoadedBackward', 'nextTriggered', 'prevTriggered');
-
-            var content = new ContentModel({
-                name: 'Please wait while this is loading...'
-            });
-            content.set('statusModel', this.get('status'));
-
-            this.dashModel = new DashModel({
-                content: content,
-                timerModel: this.get('timerModel'),
-                status: this.get('status')
-            });
-
-            this.dashView = new DashView({
-                el: $('#page'),
-                model: this.dashModel
-            });
+            _.bindAll(this, 'contentLoaded', 'contentLoadedBackward', 'nextTriggered', 'prevTriggered', 'filter');
 
             Backbone.Events.bind('next', this.nextTriggered);
             Backbone.Events.bind('prev', this.prevTriggered);
 
-            this.contentProvider = new ContentProvider({
-                listingurl: this.get('listingurl'),
-                contenturl: this.get('contenturl')
+            this.dashboardModel = new DashboardModel({
+                headerModel: this.get('headerModel'),
+                contentModel: this.get('contentModel'),
+                timerModel: this.get('timerModel'),
+                statusModel: this.get('statusModel')
+            });
+            new DashboardView({
+                el: $('#dashboard'),
+                model: this.dashboardModel
             });
 
-            this.contentFilter = new ContentFilter({
+            this.sourceProvider = new SourceProvider({
+                listingUrl: this.get('listingUrl'),
+                contentUrl: this.get('contentUrl')
+            });
+
+            this.sourceFilter = new SourceFilter({
                 tagString: this.get('tagString')
             });
 
-            this.timer = new Timer({timerModel: this.get('timerModel')});
+            this.timerService = new Timer({
+                model: this.get('timerModel')
+            });
+
             this.nextTriggered();
         },
 
-        filter: function (l) {
-            var list = this.contentFilter.filter(l);
-            if (list.size() === 0) {
-                var tags = l.pluck('tags').join('; ');
-                list.add(new ContentModel({
-                    name: 'Sorry, No content there...',
-                    content: 'No content is coming back (maybe after filtering).<br/><br/> ' +
-                        'Tag-String used: <b>' + this.get('tagString') + '</b><br/><br/>' +
-                        'There were ' + l.size() + ' entries in the unfiltered list with tags : ' + tags
-                }));
+        filter: function (sources) {
+            var filteredSources = this.sourceFilter.filter(sources);
+            if (filteredSources.size() === 0) {
+                var tags = filteredSources.pluck('tags').join('; ');
+                filteredSources.add(new SourceModel({
+                        header: new HeaderModel({name: 'Sorry, no content there...'}),
+                        content: new ContentModel({
+                            content: 'No content is coming back (maybe after filtering).<br/><br/> ' +
+                                'Tag-String used: <b>' + this.get('tagString') + '</b><br/><br/>' +
+                                'There were ' + filteredSources.size() + ' entries in the unfiltered list with tags : ' + tags
+                        })
+                    })
+                );
             }
-            return list;
+            return filteredSources;
         },
 
-        contentLoaded: function (list) {
-            list = this.filter(list);
+        contentLoaded: function (sources) {
+            sources = this.filter(sources);
 
-            var status = this.get('status');
-            status.set({current: 0, total: list.length});
-            this.set('contentList', list);
+            this.get('statusModel').set({
+                current: 0,
+                total: sources.length
+            });
+            this.set('sources', sources);
             this.nextTriggered();
         },
 
-        contentLoadedBackward: function (list) {
-            list = this.filter(list);
+        contentLoadedBackward: function (sources) {
+            sources = this.filter(sources);
 
-            var status = this.get('status');
-            status.set({current: list.length + 1, total: list.length});
-            this.set('contentList', list);
+            this.get('statusModel').set({
+                current: sources.length + 1,
+                total: sources.length
+            });
+            this.set('sources', sources);
             this.prevTriggered();
         },
 
         nextTriggered: function () {
-            var status = this.get('status');
-
+            var status = this.get('statusModel');
             var nextIndex = status.get('current');
-            var list = this.get('contentList');
+            var sourceCollection = this.get('sources');
 
-            if (nextIndex >= list.length) {
-                this.contentProvider.getContent(this.contentLoaded);
-                // todo: show 'loading?'
-            } else {
-                var next = list.at(nextIndex);
+            if (nextIndex < sourceCollection.length) {
+                var nextSource = sourceCollection.at(nextIndex);
 
-                this.dashModel.set('content', next);
+                this.get('headerModel').set(nextSource.get('header').attributes);
+                this.get('contentModel').set(nextSource.get('content').attributes);
 
                 status.set('current', nextIndex + 1);
-                var importance = next.get('importance');
-                this.timer.run(importance * 20);
+                this.timerService.play(nextSource.get('importance') * 20);
+            }
+            else {
+                this.sourceProvider.getSources(this.contentLoaded);
             }
         },
 
         prevTriggered: function () {
-            var status = this.get('status');
+            var status = this.get('statusModel');
+            var previousIndex = status.get('current') - 1;
+            var sourceCollection = this.get('sources');
 
-            var prevIndex = status.get('current') - 1;
-            var list = this.get('contentList');
+            if (previousIndex > 0) {
+                var previousSource = sourceCollection.at(previousIndex);
 
-            if (prevIndex <= 0) {
-                console.log('Cannot display first... ' + prevIndex + ' <= 0');
-                this.contentProvider.getContent(this.contentLoadedBackward);
-            } else {
-                console.log('Displaying number ' + prevIndex);
+                this.get('headerModel').set(previousSource.get('header').attributes);
+                this.get('contentModel').set(previousSource.get('content').attributes);
 
-                var prev = list.at(prevIndex - 1);
-                this.dashModel.set('content', prev);
-                status.set('current', prevIndex);
-
-                var importance = prev.get('importance');
-                this.timer.run(importance * 20);
+                status.set('current', previousIndex);
+                this.timerService.play(previousSource.get('importance') * 20);
+            }
+            else {
+                console.log('Cannot display first... ' + previousIndex + ' <= 0');
+                this.sourceProvider.getSources(this.contentLoadedBackward);
             }
         }
     });

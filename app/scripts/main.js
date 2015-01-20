@@ -20,7 +20,7 @@ require.config({
 require([
     'backbone',
     'dashboard-app'
-], function (Backbone, Dashboard) {
+], function (Backbone, DashboardApp) {
     Backbone.history.start();
 
     var tags = window.location.search;
@@ -30,9 +30,9 @@ require([
         tags = tags.substr(1);
     }
 
-    new Dashboard({
-        listingurl: './listing.json',
-        contenturl: './',
+    new DashboardApp({
+        listingUrl: './listing.json',
+        contentUrl: './',
         tagString: tags
     });
 });

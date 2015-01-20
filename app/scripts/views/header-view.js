@@ -6,7 +6,7 @@ define([
 
     return Backbone.View.extend({
 
-        templateName: 'ContentView',
+        templateName: 'HeaderView',
 
         initialize: function () {
             _.bindAll(this, 'render');

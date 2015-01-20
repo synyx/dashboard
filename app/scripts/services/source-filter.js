@@ -1,8 +1,8 @@
 define([
     'backbone',
     'underscore',
-    'models/content-collection'
-], function (Backbone, _, ContentCollection) {
+    'models/source-collection'
+], function (Backbone, _, SourceCollection) {
     'use strict';
 
     return Backbone.Model.extend({
@@ -58,16 +58,16 @@ define([
             });
         },
 
-        filter: function (contentList) {
-            var newList = new ContentCollection();
+        filter: function (sources) {
+            var filteredSources = new SourceCollection();
             var that = this;
-            contentList.each(function (content) {
-                if (that.matchesFilters(content)) {
-                    newList.add(content);
+            sources.each(function (source) {
+                if (that.matchesFilters(source)) {
+                    filteredSources.add(source);
                 }
             });
 
-            return newList;
+            return filteredSources;
         },
 
         matchesFilters: function (content) {

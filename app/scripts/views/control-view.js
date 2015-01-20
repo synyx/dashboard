@@ -1,57 +1,36 @@
 define([
     'backbone',
-    'template-manager'
+    'template-manager/template-manager'
 ], function (Backbone, templateManager) {
     'use strict';
 
     return Backbone.View.extend({
 
-        templateName: 'ControlView',
+        templateNamePrev: 'ControlViewPrev',
+        templateNameNext: 'ControlViewNext',
 
-        events: {
-            'click .reload': 'reload',
-            'click .prev': 'prev',
-            'click .next': 'next',
-            'click .pause': 'pause',
-            'click .play': 'play'
-        },
+        initialize: function (options) {
+            _.bindAll(this, 'render', 'prev', 'next', 'pauseOrPlay');
 
-        initialize: function () {
-            _.bindAll(this, 'render', 'reload', 'prev', 'next', 'pause', 'play', 'pauseOrPlay');
-
-            this.model.bind('change', this.render);
-
-            this.template = templateManager.getTemplate(this.templateName);
+            this.elPrev = options.elPrev;
+            this.elNext = options.elNext;
+            
+            this.templatePrev = templateManager.getTemplate(this.templateNamePrev);
+            this.templateNext = templateManager.getTemplate(this.templateNameNext);
             this.render();
 
             this.bindKeyPress();
-        },
-
-        bindKeyPress: function () {
-            var self = this;
-            $(document).keydown(function (e) {
-                if (e.keyCode === 37) { // left
-                    self.prev();
-                    return false;
-                }
-                else if (e.keyCode === 39) { // right
-                    self.next();
-                    return false;
-                }
-                else if (e.keyCode === 32) { // space
-                    self.pauseOrPlay();
-                    return false;
-                }
-            });
+            this.registerEvents();
         },
 
         render: function () {
-            var model = this.model.toJSON();
-            this.$el.html(this.template(model));
+            this.elPrev.html(this.templatePrev(this.model.toJSON()));
+            this.elNext.html(this.templateNext(this.model.toJSON()));
         },
-
-        reload: function () {
-            Backbone.Events.trigger('reload');
+        
+        registerEvents: function (){
+            $('#control-prev').on('click', $.proxy(this.prev, this));
+            $('#control-next').on('click', $.proxy(this.next, this));
         },
 
         prev: function () {
@@ -62,20 +41,30 @@ define([
             Backbone.Events.trigger('next');
         },
 
-        pause: function () {
-            Backbone.Events.trigger('pause');
-        },
-
-        play: function () {
-            Backbone.Events.trigger('play');
-        },
-
         pauseOrPlay: function () {
             if (this.model.get('isRunning')) {
                 Backbone.Events.trigger('pause');
             } else {
                 Backbone.Events.trigger('play');
             }
+        },
+
+        bindKeyPress: function () {
+            var that = this;
+            $(document).keydown(function (event) {
+                event.stopPropagation();
+                switch (event.keyCode) {
+                    case 37:
+                        that.prev();
+                        break;
+                    case 39:
+                        that.next();
+                        break;
+                    case 32:
+                        that.pauseOrPlay();
+                        break;
+                }
+            });
         }
     });
 });

@@ -5,8 +5,9 @@ define([
 
     return Backbone.Model.extend({
         defaults: {
-            isRunning: true,
-            seconds: 0
+            isRunning: false,
+            seconds: undefined,
+            secondsAtStart: undefined
         }
     });
 });
