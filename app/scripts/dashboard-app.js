@@ -11,9 +11,7 @@ define([
     'services/source-provider',
     'services/source-filter',
     'services/timer'
-], function (Backbone, SourceCollection, StatusModel, TimerModel, SourceModel, HeaderModel, ContentModel, DashboardModel,
-             DashboardView,
-             SourceProvider, SourceFilter, Timer) {
+], function (Backbone, SourceCollection, StatusModel, TimerModel, SourceModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, Timer) {
     'use strict';
 
     return Backbone.Model.extend({
@@ -28,10 +26,10 @@ define([
         },
 
         initialize: function () {
-            _.bindAll(this, 'contentLoaded', 'contentLoadedBackward', 'nextTriggered', 'prevTriggered', 'filter');
+            _.bindAll(this, 'start', 'contentLoaded', 'triggerPrev', 'triggerNext', 'changeSource', 'filter');
 
-            Backbone.Events.bind('next', this.nextTriggered);
-            Backbone.Events.bind('prev', this.prevTriggered);
+            Backbone.Events.bind('prev', this.triggerPrev);
+            Backbone.Events.bind('next', this.triggerNext);
 
             this.dashboardModel = new DashboardModel({
                 headerModel: this.get('headerModel'),
@@ -57,7 +55,11 @@ define([
                 model: this.get('timerModel')
             });
 
-            this.nextTriggered();
+            Number.prototype.mod = function (n) {
+                return ((this % n) + n) % n;
+            };
+
+            this.start();
         },
 
         filter: function (sources) {
@@ -77,65 +79,43 @@ define([
             return filteredSources;
         },
 
+        start: function () {
+            this.sourceProvider.getSources(this.contentLoaded);
+        },
+
         contentLoaded: function (sources) {
             sources = this.filter(sources);
 
             this.get('statusModel').set({
-                current: 0,
+                current: undefined,
+                next: 0,
+                prev: sources.length - 1,
                 total: sources.length
             });
             this.set('sources', sources);
-            this.nextTriggered();
+            this.triggerNext();
         },
 
-        contentLoadedBackward: function (sources) {
-            sources = this.filter(sources);
-
-            this.get('statusModel').set({
-                current: sources.length + 1,
-                total: sources.length
-            });
-            this.set('sources', sources);
-            this.prevTriggered();
+        triggerNext: function () {
+            this.changeSource(this.get('statusModel').get('next'));
         },
 
-        nextTriggered: function () {
+        triggerPrev: function () {
+            this.changeSource(this.get('statusModel').get('prev'));
+        },
+
+        changeSource: function (index) {
             var status = this.get('statusModel');
-            var nextIndex = status.get('current');
-            var sourceCollection = this.get('sources');
+            var source = this.get('sources').at(index);
 
-            if (nextIndex < sourceCollection.length) {
-                var nextSource = sourceCollection.at(nextIndex);
+            this.get('headerModel').set(source.get('header').attributes);
+            this.get('contentModel').set(source.get('content').attributes);
 
-                this.get('headerModel').set(nextSource.get('header').attributes);
-                this.get('contentModel').set(nextSource.get('content').attributes);
+            status.set('prev', ((index - 1).mod(status.get('total'))));
+            status.set('current', index);
+            status.set('next', (index + 1).mod(status.get('total')));
 
-                status.set('current', nextIndex + 1);
-                this.timerService.play(nextSource.get('importance') * 20);
-            }
-            else {
-                this.sourceProvider.getSources(this.contentLoaded);
-            }
-        },
-
-        prevTriggered: function () {
-            var status = this.get('statusModel');
-            var previousIndex = status.get('current') - 1;
-            var sourceCollection = this.get('sources');
-
-            if (previousIndex > 0) {
-                var previousSource = sourceCollection.at(previousIndex);
-
-                this.get('headerModel').set(previousSource.get('header').attributes);
-                this.get('contentModel').set(previousSource.get('content').attributes);
-
-                status.set('current', previousIndex);
-                this.timerService.play(previousSource.get('importance') * 20);
-            }
-            else {
-                console.log('Cannot display first... ' + previousIndex + ' <= 0');
-                this.sourceProvider.getSources(this.contentLoadedBackward);
-            }
+            this.timerService.play(source.get('importance') * 20);
         }
     });
 });

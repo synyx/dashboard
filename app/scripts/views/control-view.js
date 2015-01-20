@@ -14,9 +14,10 @@ define([
 
             this.elPrev = options.elPrev;
             this.elNext = options.elNext;
-            
+
             this.templatePrev = templateManager.getTemplate(this.templateNamePrev);
             this.templateNext = templateManager.getTemplate(this.templateNameNext);
+
             this.render();
 
             this.bindKeyPress();
@@ -27,8 +28,8 @@ define([
             this.elPrev.html(this.templatePrev(this.model.toJSON()));
             this.elNext.html(this.templateNext(this.model.toJSON()));
         },
-        
-        registerEvents: function (){
+
+        registerEvents: function () {
             $('#control-prev').on('click', $.proxy(this.prev, this));
             $('#control-next').on('click', $.proxy(this.next, this));
         },

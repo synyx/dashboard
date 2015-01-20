@@ -41,9 +41,10 @@ define([
             }
 
             if (!this.model.get('isRunning')) {
-                console.log('Starting the timer');
                 this.model.set('isRunning', true);
                 this.tickIntervall = setInterval(this.tick, tick);
+
+                console.log('Starting the timer');
             }
         },
 
