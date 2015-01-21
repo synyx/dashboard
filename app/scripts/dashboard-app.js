@@ -111,7 +111,7 @@ define([
             this.get('headerModel').set(source.get('header').attributes);
             this.get('contentModel').set(source.get('content').attributes);
 
-            status.set('prev', ((index - 1).mod(status.get('total'))));
+            status.set('prev', (index - 1).mod(status.get('total')));
             status.set('current', index);
             status.set('next', (index + 1).mod(status.get('total')));
 

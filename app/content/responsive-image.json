@@ -1,0 +1,6 @@
+{
+    "tags" : ["test", "odd"],
+    "importance" : 3,
+    "name":"Responsive Image",
+    "content":"<div class='center width-half'><img class='img-responsive' src='images/test-image.jpg' alt='there should be a nice image'/></div>"
+}
