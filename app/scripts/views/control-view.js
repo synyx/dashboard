@@ -30,8 +30,8 @@ define([
         },
 
         registerEvents: function () {
-            $('#control-prev').on('click', $.proxy(this.prev, this));
-            $('#control-next').on('click', $.proxy(this.next, this));
+            $('.control-prev').on('click', $.proxy(this.prev, this));
+            $('.control-next').on('click', $.proxy(this.next, this));
         },
 
         prev: function () {
