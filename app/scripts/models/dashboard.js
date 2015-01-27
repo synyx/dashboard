@@ -5,9 +5,10 @@ define([
 
     return Backbone.Model.extend({
         defaults: {
-            isRunning: false,
-            seconds: undefined,
-            secondsAtStart: undefined
+            headerModel: undefined,
+            contentModel: undefined,
+            timerModel: undefined,
+            statusModel: undefined
         }
     });
 });

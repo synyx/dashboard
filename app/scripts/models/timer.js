@@ -5,8 +5,9 @@ define([
 
     return Backbone.Model.extend({
         defaults: {
-            content: undefined,
-            timerModel: undefined
+            isRunning: false,
+            secondsLeft: undefined,
+            seconds: undefined
         }
     });
 });

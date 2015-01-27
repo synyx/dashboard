@@ -3,7 +3,7 @@ define([
 ], function (Backbone) {
     'use strict';
 
-    var tick = 50; // in ms
+    var tick = 50; // every ${tick}ms
     
     return Backbone.Model.extend({
 
@@ -18,11 +18,11 @@ define([
         },
 
         tick: function () {
-            var seconds = this.model.get('seconds');
+            var secondsLeft = this.model.get('secondsLeft');
             var isRunning = this.model.get('isRunning');
 
-            if (isRunning && seconds > 0) {
-                this.model.set('seconds', (seconds - (tick/1000)));
+            if (isRunning && secondsLeft > 0) {
+                this.model.set('secondsLeft', (secondsLeft - (tick/1000)));
             }
             else {
                 console.log('Triggering next event');
@@ -34,8 +34,8 @@ define([
 
             if (startValue) {
                 this.model.set({
-                    secondsAtStart: startValue,
-                    seconds: startValue
+                    seconds: startValue,
+                    secondsLeft: startValue
                 });
                 console.log('Set duration to: ' + startValue + 's');
             }

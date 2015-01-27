@@ -25,12 +25,12 @@ define([
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
         },
-        
+
         drawBar: function () {
+            var secondsLeft = this.model.get('secondsLeft');
             var seconds = this.model.get('seconds');
-            var secondsAtStart = this.model.get('secondsAtStart');
             this.$('.content-timer-line').css({
-                width: ((secondsAtStart - seconds) / secondsAtStart) * 100 + '%'
+                width: ((seconds - secondsLeft) / seconds) * 100 + '%'
             });
         }
     });
