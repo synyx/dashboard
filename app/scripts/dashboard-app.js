@@ -1,5 +1,6 @@
 define([
     'backbone',
+    'jquery',
     'models/source',
     'models/sources',
     'models/status',
@@ -10,12 +11,14 @@ define([
     'services/source-provider',
     'services/source-filter',
     'services/timer'
-], function (Backbone, SourceModel, Sources, StatusModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, Timer) {
+], function (Backbone, $, SourceModel, Sources, StatusModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, Timer) {
     'use strict';
 
     return Backbone.Model.extend({
 
         defaults: {
+            contentUrl: undefined,
+            listingUrl: undefined,
             providedTags: undefined,
             sources: new Sources(),
             headerModel: new HeaderModel(),
@@ -25,6 +28,10 @@ define([
 
         initialize: function () {
             _.bindAll(this, 'start', 'contentLoaded', 'triggerPrev', 'triggerNext', 'changeSource', 'filter');
+
+            Number.prototype.mod = function (n) {
+                return ((this % n) + n) % n;
+            };
 
             Backbone.Events.bind('prev', this.triggerPrev);
             Backbone.Events.bind('next', this.triggerNext);
@@ -51,10 +58,6 @@ define([
             this.timerService = new Timer({
                 model: this.get('statusModel')
             });
-
-            Number.prototype.mod = function (n) {
-                return ((this % n) + n) % n;
-            };
 
             this.start();
         },
