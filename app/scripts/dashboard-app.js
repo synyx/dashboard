@@ -3,7 +3,6 @@ define([
     'models/source',
     'models/sources',
     'models/status',
-    'models/timer',
     'models/header',
     'models/content',
     'models/dashboard',
@@ -11,7 +10,7 @@ define([
     'services/source-provider',
     'services/source-filter',
     'services/timer'
-], function (Backbone, SourceModel, Sources, StatusModel, TimerModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, Timer) {
+], function (Backbone, SourceModel, Sources, StatusModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, Timer) {
     'use strict';
 
     return Backbone.Model.extend({
@@ -21,8 +20,7 @@ define([
             sources: new Sources(),
             headerModel: new HeaderModel(),
             contentModel: new ContentModel(),
-            statusModel: new StatusModel(),
-            timerModel: new TimerModel()
+            statusModel: new StatusModel()
         },
 
         initialize: function () {
@@ -34,7 +32,6 @@ define([
             this.dashboardModel = new DashboardModel({
                 headerModel: this.get('headerModel'),
                 contentModel: this.get('contentModel'),
-                timerModel: this.get('timerModel'),
                 statusModel: this.get('statusModel')
             });
             new DashboardView({
@@ -52,7 +49,7 @@ define([
             });
 
             this.timerService = new Timer({
-                model: this.get('timerModel')
+                model: this.get('statusModel')
             });
 
             Number.prototype.mod = function (n) {

@@ -18,12 +18,11 @@ define([
             }
 
             this.model.on('change', this.drawBar);
-
             this.render();
         },
 
         render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.template());
         },
 
         drawBar: function () {

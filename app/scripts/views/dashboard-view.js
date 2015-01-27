@@ -1,13 +1,11 @@
 define([
     'backbone',
-    'jquery',
-    'models/header',
     'views/control-view',
     'views/status-view',
     'views/content-view',
     'views/header-view',
     'template-manager/template-manager'
-], function (Backbone, $, Header, ControlView, StatusView, ContentView, HeaderView, templateManager) {
+], function (Backbone, ControlView, StatusView, ContentView, HeaderView, templateManager) {
     'use strict';
 
     return Backbone.View.extend({
@@ -28,7 +26,7 @@ define([
         },
 
         render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.template());
         },
 
         renderChildren: function () {
@@ -39,7 +37,7 @@ define([
 
             new StatusView({
                 el: this.$('#status-container'),
-                model: this.model.get('timerModel')
+                model: this.model.get('statusModel')
             });
 
             new ContentView({
@@ -50,7 +48,7 @@ define([
             new ControlView({
                 elPrev: this.$('.controls-container-prev'),
                 elNext: this.$('.controls-container-next'),
-                model: this.model.get('timerModel')
+                model: this.model.get('statusModel')
             });
         }
     });

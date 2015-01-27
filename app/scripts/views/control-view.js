@@ -25,8 +25,8 @@ define([
         },
 
         render: function () {
-            this.elPrev.html(this.templatePrev(this.model.toJSON()));
-            this.elNext.html(this.templateNext(this.model.toJSON()));
+            this.elPrev.html(this.templatePrev());
+            this.elNext.html(this.templateNext());
         },
 
         registerEvents: function () {

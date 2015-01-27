@@ -8,7 +8,10 @@ define([
             current: undefined,
             next: undefined,
             prev: undefined,
-            total: undefined
+            total: undefined,
+            isRunning: false,
+            secondsLeft: undefined,
+            seconds: undefined
         }
     });
 });
