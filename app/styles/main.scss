@@ -8,11 +8,7 @@ html, body {
   background-color: #DFE0E1;
 }
 
-/* Content */
-.content-container {
-  font-size: 1.5em;
-}
-
+/* Header */
 .header {
   padding: 1vh;
   background-color: #B2C900;
@@ -21,6 +17,23 @@ html, body {
   text-shadow: -2px 2px 3px #636363;
 }
 
+/* Content */
+.content-container {
+  font-size: 1.5em;
+}
+
+.content {
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+  padding: 0 1vmax;
+}
+
+.content-timer-line {
+  height: 0.5vh;
+  background-color: #90a300;
+}
+
+/* Controls */
 .control-container {
   padding: 0.5vh 1vh 1.5vh;
   color: #90a300;
@@ -35,35 +48,26 @@ html, body {
   text-shadow: -2px 2px 3px #636363;
 }
 
-.content {
-  margin-top: 5vh;
-  margin-bottom: 5vh;
-  padding: 0 1vmax;
-}
-
+/* Footer */
 .footer-container {
   position: fixed;
   bottom: 0;
-}
-
-.status-container {
-  height: 0.5vh;
-}
-
-.content-timer-line {
-  height: 0.5vh;
-  background-color: #90a300;
-}
-
-.no-padding {
-  padding: 0 !important;
-  margin: 0 !important;
 }
 
 #footer {
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+/* Status */
+.status-container {
+  height: 0.5vh;
+}
+
+.no-padding {
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 // table
@@ -86,7 +90,7 @@ table tbody tr td {
   vertical-align: middle;
 }
 
-// center
+// Predefined classes for the jsons
 .center {
   margin: 0 auto;
 }
@@ -105,4 +109,8 @@ table tbody tr td {
 
 .width-three-quarters {
   width: 75%;
+}
+
+.width-full {
+  width: 100%;
 }
