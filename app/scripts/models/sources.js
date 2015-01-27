@@ -1,6 +1,6 @@
 define([
     'backbone',
-    'models/content'
+    'models/source'
 ], function (Backbone, Source) {
     'use strict';
 

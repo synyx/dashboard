@@ -1,9 +1,9 @@
 define([
     'backbone',
-    'models/source-collection',
+    'models/source',
+    'models/sources',
     'models/status',
     'models/timer',
-    'models/source',
     'models/header',
     'models/content',
     'models/dashboard',
@@ -11,14 +11,14 @@ define([
     'services/source-provider',
     'services/source-filter',
     'services/timer'
-], function (Backbone, SourceCollection, StatusModel, TimerModel, SourceModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, Timer) {
+], function (Backbone, SourceModel, Sources, StatusModel, TimerModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, Timer) {
     'use strict';
 
     return Backbone.Model.extend({
 
         defaults: {
             tagString: undefined,
-            sources: new SourceCollection(),
+            sources: new Sources(),
             headerModel: new HeaderModel(),
             contentModel: new ContentModel(),
             statusModel: new StatusModel(),

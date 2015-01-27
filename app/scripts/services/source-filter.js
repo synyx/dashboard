@@ -1,8 +1,8 @@
 define([
     'backbone',
     'underscore',
-    'models/source-collection'
-], function (Backbone, _, SourceCollection) {
+    'models/sources'
+], function (Backbone, _, Sources) {
     'use strict';
 
     return Backbone.Model.extend({
@@ -59,7 +59,7 @@ define([
         },
 
         filter: function (sources) {
-            var filteredSources = new SourceCollection();
+            var filteredSources = new Sources();
             var that = this;
             sources.each(function (source) {
                 if (that.matchesFilters(source)) {

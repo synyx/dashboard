@@ -1,10 +1,10 @@
 define([
     'backbone',
-    'models/source-collection',
     'models/source',
+    'models/sources',
     'models/header',
     'models/content'
-], function (Backbone, SourceCollection, Source, Header, Content) {
+], function (Backbone, Source, Sources, Header, Content) {
     'use strict';
 
     return Backbone.Model.extend({
@@ -43,7 +43,7 @@ define([
         },
 
         successReadListing: function (callback, listings) {
-            var sourceCollection = new SourceCollection();
+            var sources = new Sources();
 
             var that = this;
             _.forEach(listings, function (listing) {
@@ -78,9 +78,9 @@ define([
                     }
                 );
 
-                sourceCollection.add(source);
+                sources.add(source);
             });
-            callback(sourceCollection);
+            callback(sources);
         },
 
         call: function (url, success, error) {
