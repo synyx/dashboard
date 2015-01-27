@@ -33,6 +33,6 @@ require([
     new DashboardApp({
         listingUrl: './listing.json',
         contentUrl: './',
-        tagString: tags
+        providedTags: tags
     });
 });

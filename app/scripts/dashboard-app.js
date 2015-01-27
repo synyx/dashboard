@@ -17,7 +17,7 @@ define([
     return Backbone.Model.extend({
 
         defaults: {
-            tagString: undefined,
+            providedTags: undefined,
             sources: new Sources(),
             headerModel: new HeaderModel(),
             contentModel: new ContentModel(),
@@ -48,7 +48,7 @@ define([
             });
 
             this.sourceFilter = new SourceFilter({
-                tagString: this.get('tagString')
+                providedTags: this.get('providedTags')
             });
 
             this.timerService = new Timer({
@@ -70,9 +70,10 @@ define([
                         header: new HeaderModel({name: 'Sorry, no content there...'}),
                         content: new ContentModel({
                             content: 'No content is coming back (maybe after filtering).<br/><br/> ' +
-                                'Tag-String used: <b>' + this.get('tagString') + '</b><br/><br/>' +
+                                'Tag-String used: <b>' + this.get('providedTags') + '</b><br/><br/>' +
                                 'There were ' + filteredSources.size() + ' entries in the unfiltered list with tags : ' + tags
-                        })
+                        }),
+                        importance: 1000
                     })
                 );
             }

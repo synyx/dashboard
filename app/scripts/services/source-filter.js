@@ -10,8 +10,8 @@ define([
         initialize: function (options) {
             this.rules = [];
 
-            if (options.tagString) {
-                var ors = options.tagString.split('-');
+            if (options.providedTags) {
+                var ors = options.providedTags.split('-');
                 var orArray = [];
                 _.each(ors, function (or) {
                     var ands = or.split('+');
