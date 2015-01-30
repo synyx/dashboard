@@ -1,4 +1,9 @@
+.idea
+*.iml
+
 node_modules
+npm-debug.log
+
 dist
 test/temp
 .sass-cache
