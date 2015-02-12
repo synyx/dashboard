@@ -65,6 +65,36 @@ html, body {
   height: 0.5vh;
 }
 
+/* Paging */
+.paging-container {
+  background-color: #B2C900;
+}
+
+.page {
+  height: 0.6vh;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: -4px;
+
+  transition: height 0.3s;
+}
+
+.page:first-of-type {
+  margin-left: 0;
+}
+
+.page:not(:first-of-type) {
+  border-left: 1px solid #B2C900;
+}
+
+.page:hover {
+  height: 2vh;
+}
+
+.page-active {
+  height: 1vh;
+}
+
 .no-padding {
   padding: 0 !important;
   margin: 0 !important;

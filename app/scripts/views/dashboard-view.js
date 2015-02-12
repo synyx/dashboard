@@ -1,11 +1,12 @@
 define([
     'backbone',
     'views/control-view',
-    'views/status-view',
+    'views/paging-view',
+    'views/time-line-view',
     'views/content-view',
     'views/header-view',
     'template-manager/template-manager'
-], function (Backbone, ControlView, StatusView, ContentView, HeaderView, templateManager) {
+], function (Backbone, ControlView, PagingView, TimeLineView, ContentView, HeaderView, templateManager) {
     'use strict';
 
     return Backbone.View.extend({
@@ -35,8 +36,14 @@ define([
                 model: this.model.get('headerModel')
             });
 
-            new StatusView({
-                el: this.$('#status-container'),
+            new PagingView({
+                el: this.$('#paging-container'),
+                model: this.model.get('statusModel'),
+                sources: this.model.get('sources')
+            });
+
+            new TimeLineView({
+                el: this.$('#time-line-container'),
                 model: this.model.get('statusModel')
             });
 
