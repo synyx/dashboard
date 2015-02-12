@@ -27,7 +27,7 @@ define([
         },
 
         initialize: function () {
-            _.bindAll(this, 'start', 'loadSources', 'triggerPrev', 'triggerNext', 'changeSource', 'filter');
+            _.bindAll(this, 'render', 'initializeLoadSources', 'loadSources', 'triggerPrev', 'triggerNext', 'changeSource', 'filter');
 
             Number.prototype.mod = function (n) {
                 return ((this % n) + n) % n;
@@ -35,16 +35,6 @@ define([
 
             Backbone.Events.bind('prev', this.triggerPrev);
             Backbone.Events.bind('next', this.triggerNext);
-
-            this.dashboardModel = new DashboardModel({
-                headerModel: this.get('headerModel'),
-                contentModel: this.get('contentModel'),
-                statusModel: this.get('statusModel')
-            });
-            new DashboardView({
-                el: $('#dashboard'),
-                model: this.dashboardModel
-            });
 
             this.sourceProvider = new SourceProvider({
                 listingUrl: this.get('listingUrl'),
@@ -59,7 +49,20 @@ define([
                 model: this.get('statusModel')
             });
 
-            this.start();
+            this.initializeLoadSources();
+            this.render();
+        },
+
+        render: function () {
+            new DashboardView({
+                el: $('#dashboard'),
+                model: new DashboardModel({
+                    headerModel: this.get('headerModel'),
+                    contentModel: this.get('contentModel'),
+                    statusModel: this.get('statusModel'),
+                    sources: this.get('sources')
+                })
+            });
         },
 
         filter: function (sources) {
@@ -80,21 +83,21 @@ define([
             return filteredSources;
         },
 
-        start: function () {
+        initializeLoadSources: function () {
             this.sourceProvider.getSources(this.loadSources);
             this.triggerNext();
         },
 
         loadSources: function (sources) {
-            sources = this.filter(sources);
+            var filteredSources = this.filter(sources);
 
             this.get('statusModel').set({
                 current: undefined,
                 next: 0,
-                prev: sources.length - 1,
-                total: sources.length
+                prev: filteredSources.length - 1,
+                total: filteredSources.length
             });
-            this.set('sources', sources);
+            this.get('sources').reset(filteredSources.toArray());
         },
 
         triggerNext: function () {
@@ -106,7 +109,12 @@ define([
         },
 
         changeSource: function (index) {
+
             var status = this.get('statusModel');
+            if (index === status.get('next') && status.get('next') === 0) {
+                this.sourceProvider.getSources(this.loadSources);
+            }
+
             var source = this.get('sources').at(index);
 
             this.get('headerModel').set(source.get('header').attributes);
@@ -117,10 +125,6 @@ define([
             status.set('next', (index + 1).mod(status.get('total')));
 
             this.timerService.play(source.get('importance') * 20);
-
-            if (status.get('current') && status.get('next') === 0) {
-                this.sourceProvider.getSources(this.loadSources);
-            }
         }
     });
 });
