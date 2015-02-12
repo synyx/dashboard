@@ -43,17 +43,16 @@ define([
         },
 
         percentage: function () {
-            var length = parseInt(this.$('.page').length);
-            var percentage = (100 / length).toFixed(2);
-
-            this.$('.page').css({'width': percentage + '%'});
-            this.$('.page:last-of-type').css({'width': percentage + (100 - (length * percentage)) + '%'});
+            this.$('.page').css({'width': (100 / parseInt(this.$('.page').length)).toFixed(2)  + '%'});
         },
 
         activeSource: function () {
-            var activePageIndex = this.model.get('current') + 1;
-            this.$('.page:nth-of-type(' + activePageIndex + ')').addClass('page-active');
-            this.$('.page:not(:nth-of-type(' + activePageIndex + '))').removeClass('page-active');
+            var currentPage = this.model.get('current');
+            if (currentPage !== undefined) {
+                var activePageIndex = currentPage + 1;
+                this.$('.page:nth-of-type(' + activePageIndex + ')').addClass('page-active');
+                this.$('.page:not(:nth-of-type(' + activePageIndex + '))').removeClass('page-active');
+            }
         },
 
         stringToColor: function (str) {
