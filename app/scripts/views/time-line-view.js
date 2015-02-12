@@ -6,7 +6,7 @@ define([
 
     return Backbone.View.extend({
 
-        templateName: 'StatusView',
+        templateName: 'TimeLineView',
 
         initialize: function () {
             _.bindAll(this, 'render', 'drawBar');
