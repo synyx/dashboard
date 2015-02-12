@@ -1,8 +1,9 @@
 define([
     'backbone',
+    'jquery',
     'models/header',
     'models/content'
-], function (Backbone, Header, Content) {
+], function (Backbone, $, Header, Content) {
     'use strict';
 
     return Backbone.Model.extend({
@@ -20,8 +21,7 @@ define([
                 tags = ['legacy'];
                 this.set('tags', tags);
             }
-            else if ($.inArray('legacy', tags) === -1 &&
-                $.inArray('nolegacy', tags) === -1) {
+            else if ($.inArray('legacy', tags) === -1 && $.inArray('nolegacy', tags) === -1) {
                 tags.push('legacy');
             }
 
