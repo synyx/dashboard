@@ -10,7 +10,7 @@ define([
         templateName: 'PagingView',
 
         initialize: function (options) {
-            _.bindAll(this, 'render', 'colorizePages', 'percentage', 'activeSource');
+            _.bindAll(this, 'render', 'colorizePages', 'calculatePageWidth', 'activeSource');
 
             this.template = templateManager.getTemplate(this.templateName);
 
@@ -32,7 +32,7 @@ define([
             this.$el.html(this.template(this.sources));
 
             this.colorizePages();
-            this.percentage();
+            this.calculatePageWidth();
             this.activeSource();
         },
 
@@ -42,7 +42,7 @@ define([
             });
         },
 
-        percentage: function () {
+        calculatePageWidth: function () {
             this.$('.page').css({'width': (100 / parseInt(this.$('.page').length)).toFixed(2)  + '%'});
         },
 
