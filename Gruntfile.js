@@ -172,12 +172,14 @@ module.exports = function (grunt) {
         },
         imagemin: {
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/images',
-                    src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: '<%= yeoman.dist %>/images'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>/images',
+                        src: '{,*/}*.{png,jpg,jpeg}',
+                        dest: '<%= yeoman.dist %>/images'
+                    }
+                ]
             }
         },
         cssmin: {
@@ -194,40 +196,45 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     /*removeCommentsFromCDATA: true,
-                    // https://github.com/yeoman/grunt-usemin/issues/44
-                    //collapseWhitespace: true,
-                    collapseBooleanAttributes: true,
-                    removeAttributeQuotes: true,
-                    removeRedundantAttributes: true,
-                    useShortDoctype: true,
-                    removeEmptyAttributes: true,
-                    removeOptionalTags: true*/
+                     // https://github.com/yeoman/grunt-usemin/issues/44
+                     //collapseWhitespace: true,
+                     collapseBooleanAttributes: true,
+                     removeAttributeQuotes: true,
+                     removeRedundantAttributes: true,
+                     useShortDoctype: true,
+                     removeEmptyAttributes: true,
+                     removeOptionalTags: true*/
                 },
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>',
-                    src: '*.html',
-                    dest: '<%= yeoman.dist %>'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>',
+                        src: '*.html',
+                        dest: '<%= yeoman.dist %>'
+                    }
+                ]
             }
         },
         copy: {
             dist: {
-                files: [{
-                    expand: true,
-                    dot: true,
-                    cwd: '<%= yeoman.app %>',
-                    dest: '<%= yeoman.dist %>',
-                    src: [
-                        '*.{ico,txt}',
-                        'images/{,*/}*.{webp,gif}',
-                        'styles/fonts/{,*/}*.*',
-                        'bower_components/sass-bootstrap/fonts/*.*'
-                    ]
-                }, {
-                    src: 'node_modules/apache-server-configs/dist/.htaccess',
-                    dest: '<%= yeoman.dist %>/.htaccess'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= yeoman.app %>',
+                        dest: '<%= yeoman.dist %>',
+                        src: [
+                            '*.{ico,txt}',
+                            'images/{,*/}*.{webp,gif}',
+                            'styles/fonts/{,*/}*.*',
+                            'bower_components/sass-bootstrap/fonts/*.*'
+                        ]
+                    },
+                    {
+                        src: 'node_modules/apache-server-configs/dist/.htaccess',
+                        dest: '<%= yeoman.dist %>/.htaccess'
+                    }
+                ]
             }
         },
         bower: {
@@ -265,16 +272,16 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('serve', function (target) {
+        var tasksToRun;
         if (target === 'dist') {
-            return grunt.task.run([
+            tasksToRun = [
                 'build',
                 'open:server',
                 'connect:dist:keepalive'
-            ]);
+            ];
         }
-
-        if (target === 'test') {
-            return grunt.task.run([
+        else if (target === 'test') {
+            tasksToRun = [
                 'clean:server',
                 'createDefaultTemplate',
                 'jst',
@@ -282,32 +289,35 @@ module.exports = function (grunt) {
                 'connect:test',
                 'open:test',
                 'watch'
-            ]);
+            ];
+        }
+        else {
+            tasksToRun = [
+                'clean:server',
+                'createDefaultTemplate',
+                'jst',
+                'compass:server',
+                'connect:livereload',
+                'open:server',
+                'watch'
+            ];
         }
 
-        grunt.task.run([
-            'clean:server',
-            'createDefaultTemplate',
-            'jst',
-            'compass:server',
-            'connect:livereload',
-            'open:server',
-            'watch'
-        ]);
+        grunt.task.run(tasksToRun);
     });
 
     grunt.registerTask('test', function (isConnected) {
         isConnected = Boolean(isConnected);
         var testTasks = [
-                'clean:server',
-                'createDefaultTemplate',
-                'jst',
-                'compass',
-                'connect:test',
-                'mocha'
-            ];
+            'clean:server',
+            'createDefaultTemplate',
+            'jst',
+            'compass',
+            'connect:test',
+            'mocha'
+        ];
 
-        if(!isConnected) {
+        if (!isConnected) {
             return grunt.task.run(testTasks);
         } else {
             // already connected so not going to connect again, remove the connect:test task
