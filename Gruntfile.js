@@ -36,15 +36,8 @@ module.exports = function (grunt) {
                     '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                    '<%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}',
                     'test/spec/{,*/}*.js'
                 ]
-            },
-            jst: {
-                files: [
-                    '<%= yeoman.app %>/scripts/templates/*.ejs'
-                ],
-                tasks: ['jst']
             },
             test: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/{,*/}*.js'],
@@ -146,7 +139,6 @@ module.exports = function (grunt) {
                     optimize: 'none',
                     dir: '<%= yeoman.dist %>',
                     paths: {
-                        'templates': '../../.tmp/scripts/templates',
                         'jquery': '../../<%= yeoman.app %>/bower_components/jquery/dist/jquery',
                         'underscore': '../../<%= yeoman.app %>/bower_components/lodash/dist/lodash',
                         'backbone': '../../<%= yeoman.app %>/bower_components/backbone/backbone'
@@ -242,16 +234,6 @@ module.exports = function (grunt) {
                 rjsConfig: '<%= yeoman.app %>/scripts/main.js'
             }
         },
-        jst: {
-            options: {
-                amd: true
-            },
-            compile: {
-                files: {
-                    '.tmp/scripts/templates.js': ['<%= yeoman.app %>/scripts/templates/*.ejs']
-                }
-            }
-        },
         rev: {
             dist: {
                 files: {
@@ -267,10 +249,6 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('createDefaultTemplate', function () {
-        grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
-    });
-
     grunt.registerTask('serve', function (target) {
         var tasksToRun;
         if (target === 'dist') {
@@ -283,8 +261,6 @@ module.exports = function (grunt) {
         else if (target === 'test') {
             tasksToRun = [
                 'clean:server',
-                'createDefaultTemplate',
-                'jst',
                 'compass:server',
                 'connect:test',
                 'open:test',
@@ -294,8 +270,6 @@ module.exports = function (grunt) {
         else {
             tasksToRun = [
                 'clean:server',
-                'createDefaultTemplate',
-                'jst',
                 'compass:server',
                 'connect:livereload',
                 'open:server',
@@ -310,8 +284,6 @@ module.exports = function (grunt) {
         isConnected = Boolean(isConnected);
         var testTasks = [
             'clean:server',
-            'createDefaultTemplate',
-            'jst',
             'compass',
             'connect:test',
             'mocha'
@@ -328,8 +300,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'createDefaultTemplate',
-        'jst',
         'compass:dist',
         'useminPrepare',
         'requirejs',
