@@ -1,4 +1,3 @@
-'use strict';
 var LIVERELOAD_PORT = 35729;
 var SERVER_PORT = 9000;
 var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
@@ -6,18 +5,10 @@ var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
 
-// # Globbing
-// for performance reasons we're only matching one level down:
-// 'test/spec/{,*/}*.js'
-// use this if you want to match all subfolders:
-// 'test/spec/**/*.js'
-// templateFramework: 'lodash'
-
 module.exports = function (grunt) {
-    // show elapsed time at the end
+    'use strict';
     require('time-grunt')(grunt);
-    // load all grunt tasks
-    require('load-grunt-tasks')(grunt);
+    require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'gruntify-*', '@*/grunt-*']});
 
     // configurable paths
     var yeomanConfig = {
@@ -46,7 +37,7 @@ module.exports = function (grunt) {
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
                     '<%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}',
-                    'test/spec/**/*.js'
+                    'test/spec/{,*/}*.js'
                 ]
             },
             jst: {
@@ -56,7 +47,7 @@ module.exports = function (grunt) {
                 tasks: ['jst']
             },
             test: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/{,*/}*.js'],
                 tasks: ['test:true']
             }
         },
@@ -112,15 +103,14 @@ module.exports = function (grunt) {
             dist: ['.tmp', '<%= yeoman.dist %>/*'],
             server: '.tmp'
         },
-        jshint: {
+        eslint: {
             options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
+                config: '.eslint.json'
             },
             all: [
                 'Gruntfile.js',
                 '<%= yeoman.app %>/scripts/**/*.js',
-                'test/spec/**/*.js'
+                'test/spec/{,*/}*.js'
             ]
         },
         mocha: {
@@ -154,21 +144,16 @@ module.exports = function (grunt) {
                 options: {
                     baseUrl: '<%= yeoman.app %>/scripts',
                     optimize: 'none',
+                    dir: '<%= yeoman.dist %>',
                     paths: {
                         'templates': '../../.tmp/scripts/templates',
                         'jquery': '../../<%= yeoman.app %>/bower_components/jquery/dist/jquery',
                         'underscore': '../../<%= yeoman.app %>/bower_components/lodash/dist/lodash',
                         'backbone': '../../<%= yeoman.app %>/bower_components/backbone/backbone'
                     },
-                    // TODO: Figure out how to make sourcemaps work with grunt-usemin
-                    // https://github.com/yeoman/grunt-usemin/issues/30
-                    //generateSourceMaps: true,
-                    // required to support SourceMaps
-                    // http://requirejs.org/docs/errors.html#sourcemapcomments
                     preserveLicenseComments: false,
                     useStrict: true,
                     wrap: true
-                    //uglify2: {} // https://github.com/mishoo/UglifyJS2
                 }
             }
         },
@@ -279,14 +264,13 @@ module.exports = function (grunt) {
         grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
     });
 
-    grunt.registerTask('server', function (target) {
-        grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-        grunt.task.run(['serve' + (target ? ':' + target : '')]);
-    });
-
     grunt.registerTask('serve', function (target) {
         if (target === 'dist') {
-            return grunt.task.run(['build', 'open:server', 'connect:dist:keepalive']);
+            return grunt.task.run([
+                'build',
+                'open:server',
+                'connect:dist:keepalive'
+            ]);
         }
 
         if (target === 'test') {
@@ -341,16 +325,14 @@ module.exports = function (grunt) {
         'requirejs',
         'imagemin',
         'htmlmin',
-        'concat',
         'cssmin',
-        'uglify',
         'copy',
         'rev',
         'usemin'
     ]);
 
     grunt.registerTask('default', [
-        'jshint',
+        'eslint',
         'test',
         'build'
     ]);

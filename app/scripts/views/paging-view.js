@@ -43,7 +43,7 @@ define([
         },
 
         calculatePageWidth: function () {
-            this.$('.page').css({'width': (100 / parseInt(this.$('.page').length)).toFixed(2)  + '%'});
+            this.$('.page').css({'width': (100 / parseInt(this.$('.page').length)).toFixed(2) + '%'});
         },
 
         activeSource: function () {

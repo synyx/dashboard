@@ -4,7 +4,7 @@ define([
     'use strict';
 
     var tick = 50; // every ${tick}ms
-    
+
     return Backbone.Model.extend({
 
         initialize: function (options) {
@@ -22,7 +22,7 @@ define([
             var isRunning = this.model.get('isRunning');
 
             if (isRunning && secondsLeft > 0) {
-                this.model.set('secondsLeft', (secondsLeft - (tick/1000)));
+                this.model.set('secondsLeft', (secondsLeft - (tick / 1000)));
             }
             else {
                 console.log('Triggering next event');
