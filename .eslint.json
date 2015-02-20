@@ -14,7 +14,6 @@
         "strict": [0]
     },
     "globals": {
-        "_": true,
-        "string_to_color": true
+        "_": true
     }
 }t

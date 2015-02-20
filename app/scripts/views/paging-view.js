@@ -1,7 +1,7 @@
 define([
     'backbone',
     'template-manager/template-manager',
-    'stringToColor'
+    'colorizer'
 ], function (Backbone, templateManager) {
     'use strict';
 
