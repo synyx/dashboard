@@ -2,10 +2,10 @@ define([
     'backbone',
     'template-manager/template-manager',
     'colorizer'
-], function (Backbone, templateManager) {
+], function (Backbone, templateManager, colorizer) {
     'use strict';
 
-    return Backbone.View.extend({
+    var PagingView =  Backbone.View.extend({
 
         templateName: 'PagingView',
 
@@ -14,6 +14,7 @@ define([
 
             this.template = templateManager.getTemplate(this.templateName);
 
+            // TODO definedService
             if (this.model === undefined) {
                 throw 'model is undefined';
             }
@@ -27,7 +28,12 @@ define([
 
             this.render();
         },
-
+        
+        create: function (options) {
+            'use strict';
+            return new PagingView(options);
+        },
+        
         render: function () {
             this.$el.html(this.template(this.sources));
 
@@ -38,7 +44,7 @@ define([
 
         colorizePages: function () {
             this.$('.page').each(function () {
-                $(this).css({'background-color': '#' + string_to_color($(this).attr('title'))});
+                $(this).css({'background-color': '#' + colorizer.getColor($(this).attr('title'))});
             });
         },
 
@@ -55,4 +61,6 @@ define([
             }
         }
     });
+
+    return PagingView;
 });

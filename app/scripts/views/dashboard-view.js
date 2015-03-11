@@ -18,6 +18,7 @@ define([
 
             this.template = templateManager.getTemplate(this.templateName);
 
+            // TODO extern defined service
             if (this.model === undefined) {
                 throw 'model is undefined';
             }
@@ -31,28 +32,28 @@ define([
         },
 
         renderChildren: function () {
-            new HeaderView({
+            HeaderView.prototype.create({
                 el: this.$('#header-container'),
                 model: this.model.get('headerModel')
             });
 
-            new PagingView({
+            PagingView.prototype.create({
                 el: this.$('#paging-container'),
                 model: this.model.get('statusModel'),
                 sources: this.model.get('sources')
             });
 
-            new TimeLineView({
+            TimeLineView.prototype.create({
                 el: this.$('#time-line-container'),
                 model: this.model.get('statusModel')
             });
 
-            new ContentView({
+            ContentView.prototype.create({
                 el: this.$('#content-container'),
                 model: this.model.get('contentModel')
             });
 
-            new ControlView({
+            ControlView.prototype.create({
                 elPrev: this.$('.controls-container-prev'),
                 elNext: this.$('.controls-container-next'),
                 model: this.model.get('statusModel')

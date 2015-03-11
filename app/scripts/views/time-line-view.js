@@ -4,7 +4,7 @@ define([
 ], function (Backbone, templateManager) {
     'use strict';
 
-    return Backbone.View.extend({
+    var TimeLineView = Backbone.View.extend({
 
         templateName: 'TimeLineView',
 
@@ -21,6 +21,11 @@ define([
             this.render();
         },
 
+        create: function (options) {
+            'use strict';
+            return new TimeLineView(options);
+        },
+
         render: function () {
             this.$el.html(this.template());
         },
@@ -33,4 +38,6 @@ define([
             });
         }
     });
+
+    return TimeLineView;
 });

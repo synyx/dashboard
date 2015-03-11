@@ -13,10 +13,10 @@ define([
             _.bindAll(this, 'getSources', 'successReadListing');
 
             if (!options.listingUrl) {
-                throw 'ContentProvider needs listingUrl defined in options.';
+                throw 'SourceProvider needs listingUrl defined in options.';
             }
             if (!options.contentUrl) {
-                throw 'ContentProvider needs contentUrl defined in options.';
+                throw 'SourceProvider needs contentUrl defined in options.';
             }
 
             this.listingUrl = options.listingUrl;
@@ -25,7 +25,7 @@ define([
 
         getSources: function (callback) {
             if (!callback) {
-                throw 'ContentProvider.getSources needs callback.';
+                throw 'SourceProvider.getSources needs callback.';
             }
 
             var that = this;

@@ -10,7 +10,7 @@
         "requirejs-text": "~2.0.10",
         "modernizr": "~2.7.1",
         "handlebars": "~2.0.0",
-        "colorizer": "git@github.com:derTobsch/string_to_color.git"
+        "colorizer": "https://github.com/derTobsch/stringToColor.git"
     },
     "devDependencies": {}
 }

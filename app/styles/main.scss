@@ -71,7 +71,7 @@ html, body {
 }
 
 .page {
-  height: 0.3vh;
+  height: 0.2vmax;
   display: inline-block;
   vertical-align: top;
   margin-left: -4px;
@@ -87,12 +87,8 @@ html, body {
   border-left: 1px solid #B2C900;
 }
 
-.page:hover {
-  height: 1vh;
-}
-
 .page-active {
-  height: 0.6vh;
+  height: 0.6vmax;
 }
 
 .no-padding {

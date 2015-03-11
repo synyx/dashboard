@@ -4,7 +4,7 @@ define([
 ], function (Backbone, templateManager) {
     'use strict';
 
-    return Backbone.View.extend({
+    var DashboardView = Backbone.View.extend({
 
         templateName: 'ContentView',
 
@@ -17,8 +17,15 @@ define([
             this.render();
         },
 
+        create: function (options) {
+            'use strict';
+            return new DashboardView(options);
+        },
+        
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
         }
     });
+
+    return DashboardView;
 });

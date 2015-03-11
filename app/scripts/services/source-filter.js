@@ -7,23 +7,15 @@ define([
 
     return Backbone.Model.extend({
 
+        defaults: {
+            rules: []
+        },
+
         initialize: function (options) {
-            this.rules = [];
+            _.bindAll(this, 'prepareStringTags', 'initFromTags', 'filter', 'matchesFilters');
 
             if (options.providedTags) {
-                var ors = options.providedTags.split('-');
-                var orArray = [];
-                _.each(ors, function (or) {
-                    var ands = or.split('+');
-
-                    var andArray = [];
-                    _.each(ands, function (and) {
-                        andArray.push(and);
-                    });
-
-                    orArray.push(ands);
-                });
-                this.initFromTags(orArray);
+                this.initFromTags(this.prepareStringTags(options.providedTags));
             }
 
             if (options.tags) {
@@ -43,7 +35,7 @@ define([
                             return tag === contentTag;
                         });
                     };
-                    that.rules.push(tagFunction);
+                    that.get('rules').push(tagFunction);
                 }
                 else if (Object.prototype.toString.call(tag) === '[object Array]') {
                     tagFunction = function (content) {
@@ -53,9 +45,26 @@ define([
                             return $.inArray(tagX, contentTags) !== -1;
                         });
                     };
-                    that.rules.push(tagFunction);
+                    that.get('rules').push(tagFunction);
                 }
             });
+        },
+
+        prepareStringTags: function (stringTags) {
+            var ors = stringTags.split('-');
+            var orArray = [];
+            _.each(ors, function (or) {
+                var ands = or.split('+');
+
+                var andArray = [];
+                _.each(ands, function (and) {
+                    andArray.push(and);
+                });
+
+                orArray.push(ands);
+            });
+
+            return orArray;
         },
 
         filter: function (sources) {
@@ -71,12 +80,12 @@ define([
         },
 
         matchesFilters: function (content) {
-            if (this.rules.length === 0) {
+            if (this.get('rules').length === 0) {
                 return true;
             }
 
             var anyMatch = false;
-            _.each(this.rules, function (rule) {
+            _.each(this.get('rules'), function (rule) {
                 if (rule(content)) {
                     anyMatch = true;
                 }

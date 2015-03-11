@@ -4,7 +4,7 @@ define([
 ], function (Backbone, templateManager) {
     'use strict';
 
-    return Backbone.View.extend({
+    var HeaderView = Backbone.View.extend({
 
         templateName: 'HeaderView',
 
@@ -16,9 +16,16 @@ define([
 
             this.render();
         },
+        
+        create: function (options) {
+            'use strict';
+            return new HeaderView(options);
+        },
 
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
         }
     });
+
+    return HeaderView;
 });

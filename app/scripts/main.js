@@ -1,6 +1,3 @@
-/*global require*/
-'use strict';
-
 require.config({
     shim: {
         bootstrap: {
@@ -14,7 +11,7 @@ require.config({
         backbone: '../bower_components/backbone/backbone',
         underscore: '../bower_components/lodash/dist/lodash',
         bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
-        colorizer: '../bower_components/stringToColor/string_to_color'
+        colorizer: '../bower_components/colorizer/dist/string-to-color.umd'
     }
 });
 

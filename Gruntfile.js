@@ -7,6 +7,7 @@ var mountFolder = function (connect, dir) {
 
 module.exports = function (grunt) {
     'use strict';
+
     require('time-grunt')(grunt);
     require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'gruntify-*', '@*/grunt-*']});
 
@@ -109,7 +110,10 @@ module.exports = function (grunt) {
         mocha: {
             all: {
                 options: {
-                    run: true,
+                    log: true,
+                    reporter: 'Spec',
+                    run: false,
+                    timeout: 10000,
                     urls: ['http://localhost:<%= connect.test.options.port %>/index.html']
                 }
             }

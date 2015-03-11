@@ -4,7 +4,7 @@ define([
 ], function (Backbone, templateManager) {
     'use strict';
 
-    return Backbone.View.extend({
+    var ControlView = Backbone.View.extend({
 
         templateNamePrev: 'ControlViewPrev',
         templateNameNext: 'ControlViewNext',
@@ -12,6 +12,7 @@ define([
         initialize: function (options) {
             _.bindAll(this, 'render', 'prev', 'next', 'pauseOrPlay');
 
+            // TODO is defined check
             this.elPrev = options.elPrev;
             this.elNext = options.elNext;
 
@@ -22,6 +23,11 @@ define([
 
             this.bindKeyPress();
             this.registerEvents();
+        },
+
+        create: function (options) {
+            'use strict';
+            return new ControlView(options);
         },
 
         render: function () {
@@ -68,4 +74,6 @@ define([
             });
         }
     });
+
+    return ControlView;
 });
