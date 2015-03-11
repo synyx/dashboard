@@ -9,9 +9,14 @@ require.config({
         jquery: '../bower_components/jquery/dist/jquery',
         handlebars: '../bower_components/handlebars/handlebars',
         backbone: '../bower_components/backbone/backbone',
-        underscore: '../bower_components/lodash/dist/lodash',
+        lodash: '../bower_components/lodash/lodash',
         bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
         colorizer: '../bower_components/colorizer/dist/string-to-color.umd'
+    },
+    map: {
+        "*": {
+            "underscore": "lodash"
+        }
     }
 });
 

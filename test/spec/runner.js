@@ -41,6 +41,6 @@ var specs = [
     'spec/template-manager/template-manager-spec.js'
 ];
 
-require(specs, function() {
+require(specs, function () {
     mocha.run();
 });
