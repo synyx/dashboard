@@ -5,7 +5,7 @@ require.config({
         jquery: '../bower_components/jquery/dist/jquery',
         backbone: '../bower_components/backbone/backbone',
         handlebars: '../bower_components/handlebars/handlebars',
-        underscore: '../bower_components/lodash/dist/lodash',
+        lodash: '../bower_components/lodash/lodash',
         colorizer: '../bower_components/colorizer/dist/string-to-color.umd'
     },
     shim: {
@@ -18,6 +18,11 @@ require.config({
         backbone: {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
+        }
+    },
+    map: {
+        "*": {
+            "underscore": "lodash"
         }
     }
 });

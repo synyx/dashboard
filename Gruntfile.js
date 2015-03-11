@@ -144,7 +144,7 @@ module.exports = function (grunt) {
                     dir: '<%= yeoman.dist %>',
                     paths: {
                         'jquery': '../../<%= yeoman.app %>/bower_components/jquery/dist/jquery',
-                        'underscore': '../../<%= yeoman.app %>/bower_components/lodash/dist/lodash',
+                        'underscore': '../../<%= yeoman.app %>/bower_components/lodash/lodash',
                         'backbone': '../../<%= yeoman.app %>/bower_components/backbone/backbone'
                     },
                     preserveLicenseComments: false,
