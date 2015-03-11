@@ -14,8 +14,8 @@ define([
         initialize: function (options) {
             _.bindAll(this, 'prepareStringTags', 'initFromTags', 'filter', 'matchesFilters');
 
-            if (options.providedTags) {
-                this.initFromTags(this.prepareStringTags(options.providedTags));
+            if (options.providedStringTags) {
+                this.initFromTags(this.prepareStringTags(options.providedStringTags));
             }
 
             if (options.tags) {

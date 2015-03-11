@@ -19,7 +19,7 @@ define([
         defaults: {
             contentUrl: undefined,
             listingUrl: undefined,
-            providedTags: undefined,
+            providedStringTags: undefined,
             sources: new Sources(),
             headerModel: new HeaderModel(),
             contentModel: new ContentModel(),
@@ -42,7 +42,7 @@ define([
             });
 
             this.sourceFilter = new SourceFilter({
-                providedTags: this.get('providedTags')
+                providedStringTags: this.get('providedStringTags')
             });
 
             this.timerService = new Timer({
@@ -73,7 +73,7 @@ define([
                         header: new HeaderModel({name: 'Sorry, no content there...'}),
                         content: new ContentModel({
                             content: 'No content is coming back (maybe after filtering).<br/><br/> ' +
-                                'Tag-String used: <b>' + this.get('providedTags') + '</b><br/><br/>' +
+                                'Tag-String used: <b>' + this.get('providedStringTags') + '</b><br/><br/>' +
                                 'There were ' + filteredSources.size() + ' entries in the unfiltered list with tags : ' + tags
                         }),
                         importance: 1000
