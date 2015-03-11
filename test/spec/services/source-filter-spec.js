@@ -128,8 +128,8 @@ define(['services/source-filter', 'models/sources', 'models/source'], function (
                 expect(result.at(1).get('name')).to.be.equal('funnyAboutProject');
             });
 
-            it('filters using tags from providedTags', function () {
-                var sut = new SourceFilter({providedTags: 'project+fun-info'});
+            it('filters using tags from providedStringTags', function () {
+                var sut = new SourceFilter({providedStringTags: 'project+fun-info'});
                 
                 var list = new SourcesModel();
                 list.add(new SourceModel({tags: ['fun'], name: 'funny'}));

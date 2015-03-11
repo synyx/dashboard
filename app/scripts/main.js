@@ -31,6 +31,6 @@ require([
     new DashboardApp({
         listingUrl: './listing.json',
         contentUrl: './',
-        providedTags: tags
+        providedStringTags: tags
     });
 });
