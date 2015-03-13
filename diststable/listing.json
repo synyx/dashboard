@@ -1,7 +1,12 @@
 [
-    "content/table.json",
-    "content/centered-div.json",
-    "content/responsive-image.json",
-    "content/long-text.json",
-    "content/fifth.json"
+  "content/generated/01_abverkauf.json",
+  "content/generated/bier.json",
+  "content/generated/blog.json",
+  "content/generated/fahnenbloggen.json",
+  "content/generated/kvv.json",
+  "content/generated/schule.json",
+  "content/generated/sonar_violations.json",
+  "content/generated/winter.json",
+  "content/konferenz.json",
+  "content/webcam.json"
 ]
