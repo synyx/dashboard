@@ -1,0 +1,6 @@
+{
+    "tags" : ["test", "even"],
+    "importance" : 2,
+    "name":"I am a centered div",
+    "content":"<div class='center width-half center-text' style='background-color: #B2C900;'>I like to be in the center of this dashboard oO</div>"
+}

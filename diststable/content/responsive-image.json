@@ -1,0 +1,6 @@
+{
+    "tags" : ["test", "odd"],
+    "importance" : 3,
+    "name":"Responsive Image",
+    "content":"<div class='center width-full'><img class='img-responsive' src='images/test-image.jpg' alt='there should be a nice image'/><br/> Image from http://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg</div>"
+}
