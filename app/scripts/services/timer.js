@@ -13,8 +13,8 @@ define([
 
             this.model = options.model;
 
-            Backbone.Events.bind('pause', this.stop);
-            Backbone.Events.bind('play', this.play);
+            this.model.on('pause', this.stop);
+            this.model.on('play', this.play);
         },
 
         tick: function () {
@@ -27,7 +27,7 @@ define([
                 }
                 else {
                     console.log('Triggering next event');
-                    Backbone.Events.trigger('next');
+                    this.model.trigger('next');
                 }
             }
         },

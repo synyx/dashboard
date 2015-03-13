@@ -1,4 +1,4 @@
-define(['views/control-view', 'models/status'], function (ControlView, StatusModel) {
+define(['views/control-view', 'models/status', 'jquery'], function (ControlView, modelModel, $) {
     'use strict';
 
     describe('Control view test suite', function () {
@@ -7,7 +7,7 @@ define(['views/control-view', 'models/status'], function (ControlView, StatusMod
         var model;
 
         beforeEach(function () {
-            model = new StatusModel();
+            model = new modelModel();
             sut = new ControlView({
                 model: model,
                 elPrev: $('<div></div>'),
@@ -24,34 +24,37 @@ define(['views/control-view', 'models/status'], function (ControlView, StatusMod
         });
 
         describe('throws event on', function () {
-
-            var sandbox;
-
-            beforeEach(function () {
-                sandbox = sinon.sandbox.create();
-                sandbox.stub(Backbone.Events, 'trigger');
+            it('arrow right has been pressed', function (done) {
+                model.on('next', function () {
+                    done();
+                });
+                initiateEvent(39);
             });
 
-            afterEach(function () {
-                sandbox.restore();
+            it('arrow left has been pressed', function (done) {
+                model.on('prev', function () {
+                    done();
+                });
+                initiateEvent(37);
             });
 
-            it('arrow right has been pressed', function () {
-                //TODO
+            it('space has been pressed to play', function (done) {
+                model.on('play', function () {
+                    done();
+                });
+                initiateEvent(32);
             });
 
-            it('arrow left has been pressed', function () {
-                //TODO
-            });
-
-            it('space has been pressed', function () {
-                //TODO
+            it('space has been pressed to pause', function (done) {
+                model.on('pause', function () {
+                    done();
+                });
+                model.set({isRunning: true});
+                initiateEvent(32);
             });
 
             function initiateEvent(keyCode) {
-                var e = $.Event('keydown');
-                e.keyCode = keyCode;
-                $(document).trigger(e);
+                $(document).trigger($.Event('keydown', { keyCode: keyCode }));
             }
         });
     });

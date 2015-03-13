@@ -33,8 +33,8 @@ define([
                 return ((this % n) + n) % n;
             };
 
-            Backbone.Events.bind('prev', this.triggerPrev);
-            Backbone.Events.bind('next', this.triggerNext);
+            this.get('statusModel').on('prev', this.triggerPrev);
+            this.get('statusModel').on('next', this.triggerNext);
 
             this.sourceProvider = new SourceProvider({
                 listingUrl: this.get('listingUrl'),

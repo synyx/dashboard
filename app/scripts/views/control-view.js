@@ -41,18 +41,18 @@ define([
         },
 
         prev: function () {
-            Backbone.Events.trigger('prev');
+            this.model.trigger('prev');
         },
 
         next: function () {
-            Backbone.Events.trigger('next');
+            this.model.trigger('next');
         },
 
         pauseOrPlay: function () {
             if (this.model.get('isRunning')) {
-                Backbone.Events.trigger('pause');
+                this.model.trigger('pause');
             } else {
-                Backbone.Events.trigger('play');
+                this.model.trigger('play');
             }
         },
 
