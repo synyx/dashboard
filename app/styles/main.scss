@@ -1,20 +1,29 @@
-$icon-font-path: "/bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-
+$icon-font-path: '/bower_components/bootstrap-sass-official/assets/fonts/bootstrap/';
 @import 'bootstrap-sass-official/assets/stylesheets/bootstrap.scss';
+
+$header-background-color: #b2c900;
+$header-text-shadow-color: #636363;
+$header-inactive-color: #90a300;
+$content-background-color: #efeae1;
+$time-line-color: #90a300;
+
+$table-header-background-color: #b2c900;
+$table-content-background-color: #6ab023;
+$table-border-color: white;
 
 html, body {
   font-family: OpenSansRegular, Arial, Helvetica, sans-serif;
   font-size: 14px;
-  background-color: #DFE0E1;
+  background-color: $content-background-color;
 }
 
 /* Header */
 .header {
-  padding: 1vh;
-  background-color: #B2C900;
+  padding: 0.7vh;
+  background-color: $header-background-color;
   font-size: 4.5vmax;
   text-align: center;
-  text-shadow: -2px 2px 3px #636363;
+  text-shadow: -2px 2px 3px $header-text-shadow-color;
 }
 
 /* Content */
@@ -30,14 +39,14 @@ html, body {
 
 .content-timer-line {
   height: 0.5vh;
-  background-color: #90a300;
+  background-color: $time-line-color;
 }
 
 /* Controls */
 .control-container {
-  padding: 0.5vh 1vh 1.5vh;
-  color: #90a300;
-  background-color: #B2C900;
+  padding: 0.2vh 1vh 1.2vh;
+  color: $header-inactive-color;
+  background-color: $header-background-color;
   font-size: 4.5vmax;
   text-align: center;
   cursor: pointer;
@@ -45,7 +54,7 @@ html, body {
 
 .control-container:hover {
   color: #ffffff;
-  text-shadow: -2px 2px 3px #636363;
+  text-shadow: -2px 2px 3px $header-text-shadow-color;
 }
 
 /* Footer */
@@ -67,7 +76,7 @@ html, body {
 
 /* Paging */
 .paging-container {
-  background-color: #B2C900;
+  background-color: $header-background-color;
 }
 
 .page {
@@ -84,7 +93,7 @@ html, body {
 }
 
 .page:not(:first-of-type) {
-  border-left: 1px solid #B2C900;
+  border-left: 1px solid $header-background-color;
 }
 
 .page-active {
@@ -96,24 +105,26 @@ html, body {
   margin: 0 !important;
 }
 
-// table
-table th {
-  padding: 10px 20px;
-  color: #FFFFFF;
-  background-color: #B2C900;
-  border: 1px solid white;
-  text-align: center;
-}
+table {
+  th {
+    padding: 10px 20px;
+    color: #FFFFFF;
+    background-color: $table-header-background-color;
+    border: 1px solid white;
+    text-align: center;
+  }
 
-table tr:hover {
-  background-color: #6AB023;
-}
-
-table tbody tr td {
-  padding: 20px;
-  border: 1px solid white;
-  text-align: left;
-  vertical-align: middle;
+  tbody {
+    tr td {
+      padding: 20px;
+      border: 1px solid $table-border-color;
+      text-align: left;
+      vertical-align: middle;
+    }
+    tr:hover {
+      background-color: $table-content-background-color;
+    }
+  }
 }
 
 // Predefined classes for the jsons
