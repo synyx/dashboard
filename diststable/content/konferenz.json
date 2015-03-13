@@ -1,0 +1,6 @@
+{
+    "tags" : ["konferenz"],
+    "importance" : 0.7,
+    "excerpt":"Konferenzkalender",
+    "content":" <table width='100%' cellpadding='3' border='1'> <tr> <th scope='col'>Konferenz</th> <th scope='col'>Teilnehmer</th> <th scope='col'>Talk</th> </tr><tr> <td>11.+12.03.<br/>FOSSGIS</td> <td>Joo?</td> <td> -</td> </tr> <tr> <td>24.+25.03.<br/>JavaLand</td> <td>D4K Team</td> <td> D4K Workshop </td> </tr> <tr> <td>26.+27.03.<br/>Wertbeitrag der IT</td> <td>Keyman</td> <td> - </td> </tr> <tr> <td>26.+27.03.<br/>NoSQL matters Paris</td> <td>Christian Mennerich, Mike</td> <td> - </td> </tr><tr> <td>22.-24.04.<br/>OSDC</td> <td>Sascha</td> <td> - </td> </tr></table>","name":"Konferenzkalender"
+}
