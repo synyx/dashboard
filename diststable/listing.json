@@ -1,12 +1,12 @@
 [
-  "content/generated/01_abverkauf.json",
-  "content/generated/bier.json",
-  "content/generated/blog.json",
-  "content/generated/fahnenbloggen.json",
-  "content/generated/kvv.json",
-  "content/generated/schule.json",
-  "content/generated/sonar_violations.json",
-  "content/generated/winter.json",
+  "content/01_abverkauf.json",
+  "content/bier.json",
+  "content/blog.json",
+  "content/fahnenbloggen.json",
+  "content/kvv.json",
+  "content/schule.json",
+  "content/sonar_violations.json",
+  "content/winter.json",
   "content/konferenz.json",
   "content/webcam.json"
 ]
