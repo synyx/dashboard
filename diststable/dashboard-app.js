@@ -124,7 +124,7 @@ define([
             status.set('current', index);
             status.set('next', (index + 1).mod(status.get('total')));
 
-            this.timerService.play(source.get('importance') * 20);
+            this.timerService.play(source.get('importance') > 0 ? source.get('importance') * 20 : 20);
         }
     });
 });
