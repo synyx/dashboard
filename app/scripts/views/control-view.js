@@ -59,7 +59,7 @@ define([
         bindKeyPress: function () {
             var that = this;
             $(document).keydown(function (event) {
-                event.stopPropagation();
+                event.preventDefault();
                 switch (event.keyCode) {
                     case 37:
                         that.prev();
