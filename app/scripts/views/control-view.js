@@ -1,7 +1,8 @@
 define([
     'backbone',
-    'template-manager/template-manager'
-], function (Backbone, templateManager) {
+    'template-manager/template-manager',
+    'services/defined-checker'
+], function (Backbone, templateManager, definedChecker) {
     'use strict';
 
     var ControlView = Backbone.View.extend({
@@ -10,9 +11,11 @@ define([
         templateNameNext: 'ControlViewNext',
 
         initialize: function (options) {
+            definedChecker.isDefined(options.elPrev, 'previous element');
+            definedChecker.isDefined(options.elNext, 'next element');
+
             _.bindAll(this, 'render', 'prev', 'next', 'pauseOrPlay');
 
-            // TODO is defined check
             this.elPrev = options.elPrev;
             this.elNext = options.elNext;
 

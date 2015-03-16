@@ -5,8 +5,9 @@ define([
     'views/time-line-view',
     'views/content-view',
     'views/header-view',
-    'template-manager/template-manager'
-], function (Backbone, ControlView, PagingView, TimeLineView, ContentView, HeaderView, templateManager) {
+    'template-manager/template-manager',
+    'services/defined-checker'
+], function (Backbone, ControlView, PagingView, TimeLineView, ContentView, HeaderView, templateManager, definedChecker) {
     'use strict';
 
     return Backbone.View.extend({
@@ -14,14 +15,11 @@ define([
         templateName: 'DashboardView',
 
         initialize: function () {
+            definedChecker.isDefined(this.model, 'model');
+
             _.bindAll(this, 'render', 'renderChildren');
 
             this.template = templateManager.getTemplate(this.templateName);
-
-            // TODO extern defined service
-            if (this.model === undefined) {
-                throw 'model is undefined';
-            }
 
             this.render();
             this.renderChildren();

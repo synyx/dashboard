@@ -1,26 +1,22 @@
 define([
     'backbone',
     'template-manager/template-manager',
-    'colorizer'
-], function (Backbone, templateManager, colorizer) {
+    'colorizer',
+    'services/defined-checker'
+], function (Backbone, templateManager, colorizer, definedChecker) {
     'use strict';
 
-    var PagingView =  Backbone.View.extend({
+    var PagingView = Backbone.View.extend({
 
         templateName: 'PagingView',
 
         initialize: function (options) {
+            definedChecker.isDefined(this.model, 'model');
+            definedChecker.isDefined(options.sources, 'sources collection');
+
             _.bindAll(this, 'render', 'colorizePages', 'calculatePageWidth', 'activeSource');
 
             this.template = templateManager.getTemplate(this.templateName);
-
-            // TODO definedService
-            if (this.model === undefined) {
-                throw 'model is undefined';
-            }
-            if (options.sources === undefined) {
-                throw 'sources collection is undefined';
-            }
 
             this.sources = options.sources;
             this.sources.on('change', this.render);
@@ -28,12 +24,12 @@ define([
 
             this.render();
         },
-        
+
         create: function (options) {
             'use strict';
             return new PagingView(options);
         },
-        
+
         render: function () {
             this.$el.html(this.template(this.sources));
 

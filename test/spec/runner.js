@@ -37,6 +37,7 @@ var specs = [
     'spec/services/source-filter-spec.js',
     'spec/services/source-provider-spec.js',
     'spec/services/timer-spec.js',
+    'spec/services/defined-checker-spec.js',
     'spec/views/content-view-spec.js',
     'spec/views/control-view-spec.js',
     'spec/views/dashboard-view-spec.js',
