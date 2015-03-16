@@ -34,7 +34,7 @@ define(['views/paging-view', 'models/status', 'models/sources', 'models/source',
                 it('and renders own template with colorize and resizing', function () {
                     expect(sut.$el.html()).to.contain('style="background-color: rgb(0, 149, 77)');
                     expect(sut.$el.html()).to.contain('style="background-color: rgb(0, 169, 51)');
-                    expect(sut.$el.html()).to.contain('width: 50%;');
+                    expect(sut.$el.html()).to.contain('width: 49.98%;');
                 });
             });
 
