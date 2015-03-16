@@ -55,6 +55,11 @@ define([
                 that.call(
                     source.get('url'),
                     function (data) {
+
+                        if (!data.importance) {
+                            data.importance = 1;
+                        }
+
                         source.set({
                             header: new Header({
                                 name: data.name
