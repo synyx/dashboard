@@ -1,5 +1,5 @@
 {
     "importance" : 2,
-    "content": "<h1>Problem beim Laden des Listings</h1><p>Wird nochmal probiert...</p>",
-    "name": "Problem beim Listing laden"
+    "content": "<div class='width-full center-text'>Please provide a listing.json.</div>",
+    "name": "No Content"
 }

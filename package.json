@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "dependencies": {},
     "devDependencies": {
-        "apache-server-configs": "^2.13.0",
         "connect-livereload": "^0.5.3",
         "grunt": "^0.4.5",
         "grunt-bower-requirejs": "^2.0.0",

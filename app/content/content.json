@@ -1,0 +1,10 @@
+{
+    "content": "<h2>Blog.synyx.de<\/h2><ul><li class='blogEntry'>\n<h4><a href='http:\/\/blog.synyx.de\/2015\/03\/it-ist-keine-mannersache\/'>IT ist keine M\u00c3\u00a4nnersache<\/a><\/h4>\n      <\/li><li class='blogEntry'>\n          <h4><a href='http:\/\/blog.synyx.de\/2015\/02\/entwicklertag-frankfurt-2015\/'>Entwicklertag Frankfurt 2015<\/a><\/h4>\n      <\/li><li class='blogEntry'>\n          <h4><a href='http:\/\/blog.synyx.de\/2015\/02\/null-prozent-mitarbeiterfluktuation-in-den-letzten-3-jahren\/'>Null-Prozent-Mitarbeiterfluktuation in den letzten 3 Jahren<\/a><\/h4>\n      <\/li><\/ul><h2>Interner Blog<\/h2><ul><li class='blogEntry'>\n          <h4><a href='http:\/\/intblog.localdomain\/2015\/02\/wenn-ihr-abends-heimgeht\/'>Wenn ihr abends heimgeht..<\/a><\/h4>\n      <\/li><li class='blogEntry'>\n          <h4><a href='http:\/\/intblog.localdomain\/2014\/12\/billard-bei-synyx\/'>Billard bei synyx<\/a><\/h4>\n      <\/li><li class='blogEntry'>\n          <h4><a href='http:\/\/intblog.localdomain\/2014\/12\/raumtemperatur-regelung-im-buro\/'>Raumtemperatur-Regelung im B\u00c3\u00bcro<\/a><\/h4>\n      <\/li><\/ul>",
+    "name": "synyx Blogs",
+    "tags": [
+        "info",
+        "synyxinfo",
+        "blog",
+        "extblog"
+    ]
+}

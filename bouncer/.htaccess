@@ -1,6 +1,6 @@
 #RedirectMatch admin  http://nagios0/dash/nagios.php
-RedirectMatch admin  http://nagios0/dash/Nagdash/?known=off
-RedirectMatch netstat  http://nagios1/netstat.html
-RedirectMatch kueche  /
-RedirectMatch bmw  /?schule-sonar-extblog-beer
-RedirectMatch indy  /?code-schule-lgl-imtis-iris-erzbistum-beer
+RedirectMatch admin     http://nagios0/dash/Nagdash/?known=off
+RedirectMatch netstat   http://nagios1/netstat.html
+RedirectMatch kueche    /
+RedirectMatch bmw       /?schule-sonar-extblog-beer
+RedirectMatch indy      /?code-schule-lgl-imtis-iris-erzbistum-beer

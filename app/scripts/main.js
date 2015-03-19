@@ -6,12 +6,12 @@ require.config({
         }
     },
     paths: {
-        jquery: '../bower_components/jquery/dist/jquery',
-        handlebars: '../bower_components/handlebars/handlebars',
-        backbone: '../bower_components/backbone/backbone',
-        lodash: '../bower_components/lodash/lodash',
-        bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
-        colorizer: '../bower_components/colorizer/dist/string-to-color.umd'
+        jquery: 'jquery',
+        handlebars: 'handlebars',
+        backbone: 'backbone',
+        lodash: 'lodash',
+        bootstrap: 'bootstrap',
+        colorizer: 'colorizer'
     },
     map: {
         "*": {
