@@ -1,7 +1,8 @@
 define([
     'backbone',
-    'template-manager/template-manager'
-], function (Backbone, templateManager) {
+    'template-manager/template-manager',
+    'services/defined-checker'
+], function (Backbone, templateManager, definedChecker) {
     'use strict';
 
     var TimeLineView = Backbone.View.extend({
@@ -9,13 +10,11 @@ define([
         templateName: 'TimeLineView',
 
         initialize: function () {
+            definedChecker.isDefined(this.model, 'model');
+
             _.bindAll(this, 'render', 'drawBar');
 
             this.template = templateManager.getTemplate(this.templateName);
-
-            if (this.model === undefined) {
-                throw 'model is undefined';
-            }
 
             this.model.on('change', this.drawBar);
             this.render();
