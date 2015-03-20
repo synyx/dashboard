@@ -13,7 +13,6 @@ define(['services/source-provider'], function (SourceProvider) {
         });
 
         describe('instantiation', function () {
-
             it('can be instantiated', function () {
                 expect(sut).to.exist;
             });
@@ -25,12 +24,7 @@ define(['services/source-provider'], function (SourceProvider) {
             });
         });
 
-        describe('provides content', function () {
-
-            before(function () {
-                sinon.spy(jQuery, 'ajax');
-            });
-
+        describe('function', function () {
             it('has getSources function', function () {
                 expect(sut.getSources).to.exist;
             });
@@ -40,49 +34,96 @@ define(['services/source-provider'], function (SourceProvider) {
                     sut.getSources();
                 }).to.throw();
             });
+        });
 
-            // TODO
-//            it('getSources calls for listing', function () {
-//                sut.getSources(function () {
-//                });
-//
-//                expect(jQuery.ajax.calledOnce).to.be.true;
-//                expect(jQuery.ajax.getCall(0).args[0].url).to.be.equal('listingUrl');
-//            });
-//
-//            it('getSources calls for content from listing', function () {
-//                var callback = sinon.spy();
-//                sut.getSources(callback);
-//
-//                // we expect the listing has been loaded
-//                expect($.ajax).toHaveBeenCalled();
-//                var arg = $.ajax.mostRecentCall.args[0];
-//                expect(arg.url).to.be.equal(this.listingurl);
-//                expect(arg.success).to.exist;
-//
-//                // and we simulate the data coming back
-//                $.ajax.reset();
-//                var contentName = 'content1.json';
-//                arg.success([contentName]);
-//
-//                // then we expect the content-slide to have been loaded
-//                expect($.ajax).toHaveBeenCalled();
-//                var contentarg = $.ajax.mostRecentCall.args[0];
-//                expect(contentarg.url).to.be.equal(this.contenturl + contentName);
-//                expect(contentarg.success).to.exist;
-//
-//                // and we simulate the data coming back for the content
-//                $.ajax.reset();
-//                contentarg.success({title: 'test', body: 'yeah'});
-//
-//                //t then we expect the data is delivered using the callback
-//                expect(callback).toHaveBeenCalled();
-//                var list = callback.mostRecentCall.args[0];
-//                expect(list).to.exist;
-//                expect(list.length).to.be.equal(1);
-//                expect(list.at(0).get('title')).to.be.equal('test');
-//                expect(list.at(0).get('body')).to.be.equal('yeah');
-//            });
+        describe('tries to retrieve sources via getSources', function () {
+
+            var callback = {};
+            var successReadListingStub;
+
+            var sandbox;
+            beforeEach(function () {
+                sandbox = sinon.sandbox.create();
+                successReadListingStub = sandbox.stub(sut, 'successReadListing', function () {
+                });
+            });
+
+            afterEach(function () {
+                sandbox.restore();
+            });
+
+            it('calls success function', function () {
+                sandbox.stub(sut, 'call', function (url, successFunction) {
+                    successFunction('success');
+                });
+
+                sut.getSources(callback);
+                expect(successReadListingStub.calledWith(callback, 'success')).to.be.ok;
+            });
+
+            it('calls error function', function () {
+                sandbox.stub(sut, 'call', function (url, successFunction, errorFunction) {
+                    errorFunction();
+                });
+
+                sut.getSources(callback);
+                expect(successReadListingStub.calledWith(callback, ['listing-problem.json'])).to.be.ok;
+            });
+        });
+
+        describe('successReadListing', function () {
+
+            var listings = [
+                "content/success.json",
+                "content/not-found.json"
+            ];
+
+            var sandbox;
+            beforeEach(function () {
+                sandbox = sinon.sandbox.create();
+            });
+
+            afterEach(function () {
+                sandbox.restore();
+            });
+
+            it('creates a source collection', function () {
+                var generatedSources;
+                var callback = function (sources) {
+                    generatedSources = sources;
+                };
+
+                var that = this;
+                var callStub = sandbox.stub(sut, 'call', function (url, successFunction, errorFunction) {
+                    if (url === 'contentUrl/content/success.json') {
+                        successFunction({
+                            importance: 5,
+                            name: 'name',
+                            content: 'content',
+                            tags: 'tag1, tag2'
+                        });
+                    }
+                    else if (url === 'contentUrl/content/not-found.json') {
+                        errorFunction();
+                    }
+                });
+
+                sut.successReadListing(callback, listings);
+
+                expect(generatedSources.length).to.be.equal(2);
+
+                var firstSource = generatedSources.at(0);
+                expect(firstSource.get('importance')).to.be.equal(5);
+                expect(firstSource.get('tags')).to.be.equal('tag1, tag2');
+                expect(firstSource.get('url')).to.be.equal('contentUrl/content/success.json');
+                expect(firstSource.get('header').get('name')).to.be.equal('name');
+                expect(firstSource.get('content').get('content')).to.be.equal('content');
+
+                var secondSource = generatedSources.at(1);
+                expect(secondSource.get('importance')).to.be.equal(1);
+                expect(secondSource.get('header').get('name')).to.be.equal('Error loading');
+                expect(secondSource.get('content').get('content')).to.be.equal('Error loading contentUrl/content/not-found.json(undefined)');
+            });
         });
     });
 });

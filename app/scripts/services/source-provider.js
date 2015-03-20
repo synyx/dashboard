@@ -14,7 +14,7 @@ define([
             definedChecker.isDefined(options.listingUrl, 'listingUrl');
             definedChecker.isDefined(options.contentUrl, 'contentUrl');
 
-            _.bindAll(this, 'getSources', 'successReadListing');
+            _.bindAll(this, 'getSources', 'successReadListing', 'call');
 
             this.listingUrl = options.listingUrl;
             this.contentUrl = options.contentUrl;
