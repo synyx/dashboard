@@ -146,7 +146,7 @@ module.exports = function (grunt) {
                         'lodash': '../../<%= config.app %>/bower_components/lodash/lodash',
                         'bootstrap': '../../<%= config.app %>/bower_components/bootstrap/dist/js/bootstrap',
                         'colorizer': '../../<%= config.app %>/bower_components/colorizer/dist/string-to-color.umd',
-                        'requirejs': '../../<%= config.app %>/bower_components/requirejs/require'
+                        'require': '../../<%= config.app %>/bower_components/requirejs/require'
                     },
                     preserveLicenseComments: false,
                     useStrict: true,
