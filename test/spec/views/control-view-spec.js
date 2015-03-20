@@ -1,4 +1,4 @@
-define(['views/control-view', 'models/status', 'jquery'], function (ControlView, modelModel, $) {
+define(['views/control-view', 'models/status', 'jquery'], function (ControlView, StatusModel, $) {
     'use strict';
 
     describe('Control view test suite', function () {
@@ -7,12 +7,16 @@ define(['views/control-view', 'models/status', 'jquery'], function (ControlView,
         var model;
 
         beforeEach(function () {
-            model = new modelModel();
+            model = new StatusModel();
             sut = new ControlView({
                 model: model,
                 elPrev: $('<div></div>'),
                 elNext: $('<div></div>')
             });
+        });
+
+        afterEach(function () {
+            model.off();
         });
 
         describe('instantiation', function () {
@@ -42,6 +46,7 @@ define(['views/control-view', 'models/status', 'jquery'], function (ControlView,
                 model.on('play', function () {
                     done();
                 });
+                model.set({isRunning: false});
                 initiateEvent(32);
             });
 

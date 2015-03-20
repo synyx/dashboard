@@ -9,8 +9,7 @@ define(['views/dashboard-view',
     'models/status',
     'models/content',
     'models/sources'
-], function (DashboardView, ControlView, PagingView, TimeLineView, ContentView, HeaderView, 
-             DashboardModel, HeaderModel, StatusModel, ContentModel, SourcesModel) {
+], function (DashboardView, ControlView, PagingView, TimeLineView, ContentView, HeaderView, DashboardModel, HeaderModel, StatusModel, ContentModel, SourcesModel) {
     'use strict';
 
     describe('Dashboard view test suite', function () {
@@ -73,35 +72,31 @@ define(['views/dashboard-view',
 
             it('children will be rendered', function () {
                 expect(headerViewStub.calledWith({
-                    el: sinon.match.any,
+                    el: sinon.match({ selector: '#header-container' }),
                     model: headerModel
                 })).to.be.ok;
 
                 expect(pagingViewStub.calledWith({
-                    el: sinon.match.any,
+                    el: sinon.match({ selector: '#paging-container' }),
                     model: statusModel,
                     sources: sourcesModel
                 })).to.be.ok;
 
                 expect(timeLineViewStub.calledWith({
-                    el: sinon.match.any,
+                    el: sinon.match({ selector: '#time-line-container' }),
                     model: statusModel
                 })).to.be.ok;
 
                 expect(contentViewStub.calledWith({
-                    el: sinon.match.any,
+                    el: sinon.match({ selector: '#content-container' }),
                     model: contentModel
                 })).to.be.ok;
 
                 expect(controlViewStub.calledWith({
-                    elPrev: sinon.match.any,
-                    elNext: sinon.match.any,
+                    elPrev: sinon.match({ selector: '.controls-container-prev' }),
+                    elNext: sinon.match({ selector: '.controls-container-next' }),
                     model: statusModel
                 })).to.be.ok;
-            });
-
-            it('inserts own template', function () {
-                // TODO
             });
         });
     });
