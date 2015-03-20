@@ -236,7 +236,7 @@ module.exports = function (grunt) {
                         expand: true,
                         flatten: true,
                         cwd: '<%= config.app %>',
-                        src: ['listingproblem.json'],
+                        src: ['listing-problem.json'],
                         dest: '<%= config.dist %>/'
                     },
                     {

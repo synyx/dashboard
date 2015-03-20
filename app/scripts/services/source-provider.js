@@ -11,10 +11,10 @@ define([
     return Backbone.Model.extend({
 
         initialize: function (options) {
-            _.bindAll(this, 'getSources', 'successReadListing');
-
             definedChecker.isDefined(options.listingUrl, 'listingUrl');
             definedChecker.isDefined(options.contentUrl, 'contentUrl');
+
+            _.bindAll(this, 'getSources', 'successReadListing');
 
             this.listingUrl = options.listingUrl;
             this.contentUrl = options.contentUrl;
@@ -24,15 +24,13 @@ define([
             definedChecker.isDefined(callback, 'callback');
 
             var that = this;
-            var callbackCapturedCallback = function (data) {
-                that.successReadListing(callback, data);
-            };
-
             this.call(
                 this.listingUrl,
-                callbackCapturedCallback,
+                function (responseData) {
+                    that.successReadListing(callback, responseData);
+                },
                 function () {
-                    callbackCapturedCallback(['listingproblem.json']);
+                    that.successReadListing(callback, ['listing-problem.json']);
                 }
             );
         },
