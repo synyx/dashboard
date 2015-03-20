@@ -10,11 +10,16 @@ define([
         templateNamePrev: 'ControlViewPrev',
         templateNameNext: 'ControlViewNext',
 
+        events: {
+            'click .control-prev': 'prev',
+            'click .control-next': 'next'
+        },
+
         initialize: function (options) {
             definedChecker.isDefined(options.elPrev, 'previous element');
             definedChecker.isDefined(options.elNext, 'next element');
 
-            _.bindAll(this, 'render', 'prev', 'next', 'pauseOrPlay');
+            _.bindAll(this, 'render', 'prev', 'next', 'pauseOrPlay', 'bindKeyPress');
 
             this.elPrev = options.elPrev;
             this.elNext = options.elNext;
@@ -25,7 +30,6 @@ define([
             this.render();
 
             this.bindKeyPress();
-            this.registerEvents();
         },
 
         create: function (options) {
@@ -36,11 +40,6 @@ define([
         render: function () {
             this.elPrev.html(this.templatePrev());
             this.elNext.html(this.templateNext());
-        },
-
-        registerEvents: function () {
-            $('.control-prev').on('click', $.proxy(this.prev, this));
-            $('.control-next').on('click', $.proxy(this.next, this));
         },
 
         prev: function () {
