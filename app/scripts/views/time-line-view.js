@@ -16,7 +16,7 @@ define([
 
             this.template = templateManager.getTemplate(this.templateName);
 
-            this.model.on('change', this.drawBar);
+            this.listenTo(this.model, 'change', this.drawBar);
             this.render();
         },
 

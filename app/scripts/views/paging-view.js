@@ -19,8 +19,9 @@ define([
             this.template = templateManager.getTemplate(this.templateName);
 
             this.sources = options.sources;
-            this.sources.on('change', this.render);
-            this.model.on('change:current', this.activeSource);
+
+            this.listenTo(this.sources, 'change', this.render);
+            this.listenTo(this.model, 'change:current', this.activeSource);
 
             this.render();
         },

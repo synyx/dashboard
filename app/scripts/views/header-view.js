@@ -12,7 +12,7 @@ define([
             _.bindAll(this, 'render');
 
             this.template = templateManager.getTemplate(this.templateName);
-            this.model.on('change', this.render);
+            this.listenTo(this.model, 'change', this.render);
 
             this.render();
         },
