@@ -3,8 +3,9 @@ define([
     'models/source',
     'models/sources',
     'models/header',
-    'models/content'
-], function (Backbone, Source, Sources, Header, Content) {
+    'models/content',
+    'services/defined-checker'
+], function (Backbone, Source, Sources, Header, Content, definedChecker) {
     'use strict';
 
     return Backbone.Model.extend({
@@ -12,21 +13,15 @@ define([
         initialize: function (options) {
             _.bindAll(this, 'getSources', 'successReadListing');
 
-            if (!options.listingUrl) {
-                throw 'SourceProvider needs listingUrl defined in options.';
-            }
-            if (!options.contentUrl) {
-                throw 'SourceProvider needs contentUrl defined in options.';
-            }
+            definedChecker.isDefined(options.listingUrl, 'listingUrl');
+            definedChecker.isDefined(options.contentUrl, 'contentUrl');
 
             this.listingUrl = options.listingUrl;
             this.contentUrl = options.contentUrl;
         },
 
         getSources: function (callback) {
-            if (!callback) {
-                throw 'SourceProvider.getSources needs callback.';
-            }
+            definedChecker.isDefined(callback, 'callback');
 
             var that = this;
             var callbackCapturedCallback = function (data) {
