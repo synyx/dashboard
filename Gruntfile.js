@@ -228,13 +228,15 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         flatten: true,
-                        src: ['<%= config.app %>/templates/*.html'],
+                        cwd: '<%= config.app %>',
+                        src: ['templates/*.html'],
                         dest: '<%= config.dist %>/templates'
                     },
                     {
                         expand: true,
                         flatten: true,
-                        src: ['<%= config.app %>/listingproblem.json'],
+                        cwd: '<%= config.app %>',
+                        src: ['listingproblem.json'],
                         dest: '<%= config.dist %>/'
                     },
                     {
