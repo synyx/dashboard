@@ -1,9 +1,9 @@
 define([
     'backbone',
     'template-manager/template-manager',
-    'colorizer',
+    'string-to-color',
     'services/defined-checker'
-], function (Backbone, templateManager, colorizer, definedChecker) {
+], function (Backbone, templateManager, stringToColor, definedChecker) {
     'use strict';
 
     var PagingView = Backbone.View.extend({
@@ -41,7 +41,7 @@ define([
 
         colorizePages: function () {
             this.$('.page').each(function () {
-                $(this).css({'background-color': '#' + colorizer.getColor($(this).attr('title'))});
+                $(this).css({'background-color': '#' + stringToColor.getColor($(this).attr('title'))});
             });
         },
 

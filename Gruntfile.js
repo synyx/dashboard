@@ -145,7 +145,7 @@ module.exports = function (grunt) {
                         'backbone': '../../<%= config.app %>/bower_components/backbone/backbone',
                         'lodash': '../../<%= config.app %>/bower_components/lodash/lodash',
                         'bootstrap': '../../<%= config.app %>/bower_components/bootstrap/dist/js/bootstrap',
-                        'colorizer': '../../<%= config.app %>/bower_components/colorizer/dist/string-to-color.umd',
+                        'string-to-color': '../../<%= config.app %>/bower_components/string-to-color/dist/string-to-color.umd',
                         'require': '../../<%= config.app %>/bower_components/requirejs/require'
                     },
                     preserveLicenseComments: false,
