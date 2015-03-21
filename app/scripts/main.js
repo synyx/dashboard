@@ -11,7 +11,7 @@ require.config({
         backbone: 'backbone',
         lodash: 'lodash',
         bootstrap: 'bootstrap',
-        colorizer: 'colorizer'
+        'string-to-color': 'string-to-color'
     },
     map: {
         "*": {
