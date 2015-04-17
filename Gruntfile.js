@@ -275,6 +275,23 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        'regex-replace': {
+            dist: {
+                src: ['<%= config.dist %>/index.html'],
+                actions: [
+                    {
+                        name: 'requirejs-newpath',
+                        search: '<script data-main=".*" src="bower_components/requirejs/require.js"></script>',
+                        replace: function(match){
+                            var regex = /scripts\/.*main/;
+                            var result = regex.exec(match);
+                            return '<script data-main="' + result[0] + '" src="require.js"></script>'
+                        },
+                        flags: 'g'
+                    }
+                ]
+            }
         }
     });
 
@@ -334,7 +351,8 @@ module.exports = function (grunt) {
         'cssmin',
         'copy',
         'rev',
-        'usemin'
+        'usemin',
+        'regex-replace'
     ]);
 
     grunt.registerTask('default', [
