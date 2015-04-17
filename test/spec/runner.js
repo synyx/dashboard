@@ -6,7 +6,7 @@ require.config({
         backbone: '../bower_components/backbone/backbone',
         handlebars: '../bower_components/handlebars/handlebars',
         lodash: '../bower_components/lodash/lodash',
-        colorizer: '../bower_components/colorizer/dist/string-to-color.umd'
+        'string-to-color': '../bower_components/string-to-color/dist/string-to-color.umd'
     },
     shim: {
         underscore: {
