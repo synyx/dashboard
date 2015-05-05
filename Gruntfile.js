@@ -154,63 +154,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        useminPrepare: {
-            html: '<%= config.app %>/index.html',
-            options: {
-                dest: '<%= config.dist %>'
-            }
-        },
-        usemin: {
-            html: ['<%= config.dist %>/{,*/}*.html'],
-            css: ['<%= config.dist %>/styles/{,*/}*.css'],
-            options: {
-                dirs: ['<%= config.dist %>']
-            }
-        },
-        imagemin: {
-            dist: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= config.app %>/images',
-                        src: '{,*/}*.{png,jpg,jpeg}',
-                        dest: '<%= config.dist %>/images'
-                    }
-                ]
-            }
-        },
-        cssmin: {
-            dist: {
-                files: {
-                    '<%= config.dist %>/styles/main.css': [
-                        '.tmp/styles/{,*/}*.css',
-                        '<%= config.app %>/styles/{,*/}*.css'
-                    ]
-                }
-            }
-        },
-        htmlmin: {
-            dist: {
-                options: {
-                    /*removeCommentsFromCDATA: true,
-                     collapseWhitespace: true,
-                     collapseBooleanAttributes: true,
-                     removeAttributeQuotes: true,
-                     removeRedundantAttributes: true,
-                     useShortDoctype: true,
-                     removeEmptyAttributes: true,
-                     removeOptionalTags: true*/
-                },
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= config.app %>',
-                        src: '*.html',
-                        dest: '<%= config.dist %>'
-                    }
-                ]
-            }
-        },
         copy: {
             dist: {
                 files: [
@@ -331,13 +274,8 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'compass:dist',
-        'useminPrepare',
         'requirejs',
-        'imagemin',
-        'htmlmin',
-        'cssmin',
         'copy',
-        'usemin',
         'regex-replace'
     ]);
 
