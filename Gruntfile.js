@@ -35,13 +35,8 @@ module.exports = function (grunt) {
                     '<%= config.app %>/*.html',
                     '{.tmp,<%= config.app %>}/styles/{,*/}*.css',
                     '{.tmp,<%= config.app %>}/scripts/{,*/}*.js',
-                    '<%= config.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                    'test/spec/{,*/}*.js'
+                    '<%= config.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}'
                 ]
-            },
-            test: {
-                files: ['<%= config.app %>/scripts/{,*/}*.js', 'test/spec/{,*/}*.js'],
-                tasks: ['test:true']
             }
         },
         connect: {
@@ -60,19 +55,6 @@ module.exports = function (grunt) {
                     }
                 }
             },
-            test: {
-                options: {
-                    port: 9001,
-                    middleware: function (connect) {
-                        return [
-                            lrSnippet,
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'test'),
-                            mountFolder(connect, config.app)
-                        ];
-                    }
-                }
-            },
             dist: {
                 options: {
                     middleware: function (connect) {
@@ -86,25 +68,11 @@ module.exports = function (grunt) {
         open: {
             server: {
                 path: 'http://localhost:<%= connect.options.port %>'
-            },
-            test: {
-                path: 'http://localhost:<%= connect.test.options.port %>'
             }
         },
         clean: {
             dist: ['.tmp', '<%= config.dist %>/*'],
             server: '.tmp'
-        },
-        mocha: {
-            all: {
-                options: {
-                    log: true,
-                    reporter: 'Spec',
-                    run: false,
-                    timeout: 10000,
-                    urls: ['http://localhost:<%= connect.test.options.port %>/index.html']
-                }
-            }
         },
         copy: {
             dist: {
@@ -141,21 +109,6 @@ module.exports = function (grunt) {
                         dest: '<%= config.dist %>/'
                     }
                 ]
-            },
-            test: {
-                files: [
-                    {
-                        expand: true,
-                        dot: true,
-                        cwd: '<%= config.app %>',
-                        src: [
-                            '*.{ico,txt}',
-                            'images/{,*/}*.{webp,gif}',
-                            'styles/fonts/{,*/}*.*'
-                        ],
-                        dest: '<%= config.dist %>'
-                    }
-                ]
             }
         },
         'regex-replace': {
@@ -186,14 +139,6 @@ module.exports = function (grunt) {
                 'connect:dist:keepalive'
             ];
         }
-        else if (target === 'test') {
-            tasksToRun = [
-                'clean:server',
-                'connect:test',
-                'open:test',
-                'watch'
-            ];
-        }
         else {
             tasksToRun = [
                 'clean:server',
@@ -206,19 +151,6 @@ module.exports = function (grunt) {
         grunt.task.run(tasksToRun);
     });
 
-    grunt.registerTask('test', function (isConnected) {
-        var testTasks = [
-            'clean:server',
-            'connect:test',
-            'mocha'
-        ];
-
-        if (Boolean(isConnected)) {
-            testTasks.splice(testTasks.indexOf('connect:test'), 1);
-        }
-        return grunt.task.run(testTasks);
-    });
-
     grunt.registerTask('build', [
         'clean:dist',
         'copy',
@@ -226,7 +158,6 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('default', [
-        'test',
         'build'
     ]);
 };
