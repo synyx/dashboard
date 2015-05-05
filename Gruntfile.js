@@ -95,16 +95,6 @@ module.exports = function (grunt) {
             dist: ['.tmp', '<%= config.dist %>/*'],
             server: '.tmp'
         },
-        eslint: {
-            options: {
-                config: '.eslint.json'
-            },
-            all: [
-                'Gruntfile.js',
-                '<%= config.app %>/scripts/**/*.js',
-                'test/spec/{,*/}*.js'
-            ]
-        },
         mocha: {
             all: {
                 options: {
@@ -236,7 +226,6 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('default', [
-        'eslint',
         'test',
         'build'
     ]);
