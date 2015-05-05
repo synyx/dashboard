@@ -23,9 +23,9 @@ module.exports = function (grunt) {
                 nospawn: true,
                 livereload: true
             },
-            compass: {
+            sass: {
                 files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass']
+                tasks: ['sass']
             },
             livereload: {
                 options: {
@@ -116,23 +116,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        compass: {
-            options: {
-                sassDir: '<%= config.app %>/styles',
-                cssDir: '.tmp/styles',
-                imagesDir: '<%= config.app %>/images',
-                javascriptsDir: '<%= config.app %>/scripts',
-                fontsDir: '<%= config.app %>/styles/fonts',
-                importPath: '<%= config.app %>/bower_components',
-                relativeAssets: true
-            },
-            dist: {},
-            server: {
-                options: {
-                    debugInfo: true
-                }
-            }
-        },
         copy: {
             dist: {
                 files: [
@@ -216,7 +199,6 @@ module.exports = function (grunt) {
         else if (target === 'test') {
             tasksToRun = [
                 'clean:server',
-                'compass:server',
                 'connect:test',
                 'open:test',
                 'watch'
@@ -225,7 +207,6 @@ module.exports = function (grunt) {
         else {
             tasksToRun = [
                 'clean:server',
-                'compass:server',
                 'connect:livereload',
                 'open:server',
                 'watch'
@@ -238,7 +219,6 @@ module.exports = function (grunt) {
     grunt.registerTask('test', function (isConnected) {
         var testTasks = [
             'clean:server',
-            'compass',
             'connect:test',
             'mocha'
         ];
@@ -251,7 +231,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'compass:dist',
         'copy',
         'regex-replace'
     ]);
