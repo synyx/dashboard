@@ -263,19 +263,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        rev: {
-            dist: {
-                files: {
-                    src: [
-                        '<%= config.dist %>/scripts/{,*/}*.js',
-                        '<%= config.dist %>/styles/{,*/}*.css',
-                        '<%= config.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                        '/styles/fonts/{,*/}*.*',
-                        'bower_components/sass-bootstrap/fonts/*.*'
-                    ]
-                }
-            }
-        },
         'regex-replace': {
             dist: {
                 src: ['<%= config.dist %>/index.html'],
@@ -350,7 +337,6 @@ module.exports = function (grunt) {
         'htmlmin',
         'cssmin',
         'copy',
-        'rev',
         'usemin',
         'regex-replace'
     ]);
