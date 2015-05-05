@@ -133,27 +133,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        requirejs: {
-            dist: {
-                options: {
-                    baseUrl: '<%= config.app %>/scripts',
-                    optimize: 'none',
-                    dir: '<%= config.dist %>',
-                    paths: {
-                        'jquery': '../../<%= config.app %>/bower_components/jquery/dist/jquery',
-                        'handlebars': '../../<%= config.app %>/bower_components/handlebars/handlebars',
-                        'backbone': '../../<%= config.app %>/bower_components/backbone/backbone',
-                        'lodash': '../../<%= config.app %>/bower_components/lodash/lodash',
-                        'bootstrap': '../../<%= config.app %>/bower_components/bootstrap/dist/js/bootstrap',
-                        'string-to-color': '../../<%= config.app %>/bower_components/string-to-color/dist/string-to-color.umd',
-                        'require': '../../<%= config.app %>/bower_components/requirejs/require'
-                    },
-                    preserveLicenseComments: false,
-                    useStrict: true,
-                    wrap: true
-                }
-            }
-        },
         copy: {
             dist: {
                 files: [
@@ -244,7 +223,6 @@ module.exports = function (grunt) {
             ];
         }
         else {
-            // TODO geht nicht
             tasksToRun = [
                 'clean:server',
                 'compass:server',
@@ -274,7 +252,6 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'compass:dist',
-        'requirejs',
         'copy',
         'regex-replace'
     ]);
