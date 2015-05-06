@@ -276,7 +276,6 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('build', [
-        'test',
         'clean:dist',
         'copy',
         'regex-replace:dist-index',
