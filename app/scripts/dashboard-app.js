@@ -29,10 +29,6 @@ define([
         initialize: function () {
             _.bindAll(this, 'render', 'initializeLoadSources', 'loadSources', 'triggerPrev', 'triggerNext', 'changeSource', 'filter');
 
-            Number.prototype.mod = function (n) {
-                return ((this % n) + n) % n;
-            };
-
             this.get('statusModel').on('prev', this.triggerPrev);
             this.get('statusModel').on('next', this.triggerNext);
 
@@ -120,11 +116,15 @@ define([
             this.get('headerModel').set(source.get('header').attributes);
             this.get('contentModel').set(source.get('content').attributes);
 
-            status.set('prev', (index - 1).mod(status.get('total')));
+            status.set('prev', this.mod(index - 1, status.get('total')));
             status.set('current', index);
-            status.set('next', (index + 1).mod(status.get('total')));
+            status.set('next', this.mod(index + 1, status.get('total')));
 
             this.timerService.play(source.get('importance') * 20);
+        },
+
+        mod: function (n1, n2) {
+            return ((n1 % n2) + n2) % n2;
         }
     });
 });

@@ -1,10 +1,3 @@
-var LIVERELOAD_PORT = 35729;
-var SERVER_PORT = 9000;
-var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
-};
-
 module.exports = function (grunt) {
     'use strict';
 
@@ -18,46 +11,30 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         config: config,
-        watch: {
-            options: {
-                nospawn: true,
-                livereload: true
-            },
-            compass: {
-                files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass']
-            },
-            livereload: {
-                options: {
-                    livereload: grunt.option('livereloadport') || LIVERELOAD_PORT
-                },
-                files: [
-                    '<%= config.app %>/*.html',
-                    '{.tmp,<%= config.app %>}/styles/{,*/}*.css',
-                    '{.tmp,<%= config.app %>}/scripts/{,*/}*.js',
-                    '<%= config.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                    'test/spec/{,*/}*.js'
-                ]
-            },
-            test: {
-                files: ['<%= config.app %>/scripts/{,*/}*.js', 'test/spec/{,*/}*.js'],
-                tasks: ['test:true']
-            }
-        },
         connect: {
             options: {
-                port: grunt.option('port') || SERVER_PORT,
+                port: 9000,
                 hostname: 'localhost'
             },
-            livereload: {
+            app: {
                 options: {
                     middleware: function (connect) {
                         return [
-                            lrSnippet,
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, config.app)
+                            connect.static(require('path').resolve('.tmp')),
+                            connect.static(require('path').resolve(config.app))
                         ];
-                    }
+                    },
+                    open: 'http://localhost:<%= connect.options.port %>'
+                }
+            },
+            dist: {
+                options: {
+                    middleware: function (connect) {
+                        return [
+                            connect.static(require('path').resolve(config.dist))
+                        ];
+                    },
+                    open: 'http://localhost:<%= connect.options.port %>'
                 }
             },
             test: {
@@ -65,44 +42,200 @@ module.exports = function (grunt) {
                     port: 9001,
                     middleware: function (connect) {
                         return [
-                            lrSnippet,
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'test'),
-                            mountFolder(connect, config.app)
+                            connect.static(require('path').resolve('.tmp')),
+                            connect.static(require('path').resolve('test')),
+                            connect.static(require('path').resolve(config.app))
                         ];
                     }
                 }
             },
-            dist: {
+            testOpen: {
                 options: {
+                    port: 9001,
                     middleware: function (connect) {
                         return [
-                            mountFolder(connect, config.dist)
+                            connect.static(require('path').resolve('.tmp')),
+                            connect.static(require('path').resolve('test')),
+                            connect.static(require('path').resolve(config.app))
                         ];
-                    }
+                    },
+                    open: 'http://localhost:<%= connect.test.options.port %>'
                 }
-            }
-        },
-        open: {
-            server: {
-                path: 'http://localhost:<%= connect.options.port %>'
-            },
-            test: {
-                path: 'http://localhost:<%= connect.test.options.port %>'
             }
         },
         clean: {
             dist: ['.tmp', '<%= config.dist %>/*'],
             server: '.tmp'
         },
+        copy: {
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= config.app %>',
+                        src: [
+                            '*.{ico,html,txt}',
+                            'listing-problem.json'
+                        ],
+                        dest: '<%= config.dist %>'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= config.app %>/styles',
+                        src: [
+                            '{,*/}*.{css,scss}'
+                        ],
+                        dest: '<%= config.dist %>/styles'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        cwd: '<%= config.app %>/bower_components',
+                        src: [
+                            'bootstrap/dist/css/{,*/}*.{css,map}'
+                        ],
+                        dest: '<%= config.dist %>/styles'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= config.app %>/scripts',
+                        src: ['{,*/}*.js'],
+                        dest: '<%= config.dist %>'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= config.app %>/templates',
+                        src: ['{,*/}*.html'],
+                        dest: '<%= config.dist %>/templates'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= config.app %>/images',
+                        src: ['{,*/}*'],
+                        dest: '<%= config.dist %>/images'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        cwd: '<%= config.app %>/bower_components',
+                        src: [
+                            'backbone/backbone.js',
+                            'bootstrap/dist/js/bootstrap.js',
+                            'handlebars/handlebars.js',
+                            'jquery/dist/jquery.js',
+                            'string-to-color/dist/string-to-color.umd.js',
+                            'lodash/lodash.js',
+                            'requirejs/require.js'
+                        ],
+                        dest: '<%= config.dist %>/libs'
+                    },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'bouncer',
+                        src: ['{,*/}*'],
+                        dest: '<%= config.dist %>/bouncer'
+                    }
+                ]
+            }
+        },
+        sass: {
+            dist: {
+                files: {
+                    '<%= config.dist %>/styles/main.css': '<%= config.dist %>/styles/main.scss'
+                }
+            },
+            app: {
+                files: {
+                    '.tmp/styles/main.css': '<%= config.app %>/styles/main.scss'
+                }
+            }
+        },
+        'regex-replace': {
+            'dist-index': {
+                src: ['<%= config.dist %>/index.html'],
+                actions: [
+                    {
+                        search: '<script data-main=".*" src="bower_components/requirejs/require.js"></script>',
+                        replace: function (match) {
+                            var regex = /scripts\/.*main/;
+                            var result = regex.exec(match);
+                            return '<script data-main="' + result[0] + '" src="libs/require.js"></script>';
+                        },
+                        flags: 'g'
+                    },
+                    {
+                        search: 'scripts/main',
+                        replace: function () {
+                            return 'main';
+                        },
+                        flags: 'g'
+                    },
+                    {
+                        search: 'bower_components/bootstrap/dist/css/',
+                        replace: function () {
+                            return 'styles/';
+                        },
+                        flags: 'g'
+                    }
+                ]
+            },
+            'dist-main': {
+                src: ['<%= config.dist %>/main.js'],
+                actions: [
+                    {
+                        search: '../bower_components/backbone/',
+                        replace: function () {
+                            return 'libs/';
+                        },
+                        flags: 'g'
+                    },
+                    {
+                        search: '../bower_components/jquery/dist/',
+                        replace: function () {
+                            return 'libs/';
+                        },
+                        flags: 'g'
+                    },
+                    {
+                        search: '../bower_components/handlebars/',
+                        replace: function () {
+                            return 'libs/';
+                        },
+                        flags: 'g'
+                    },
+                    {
+                        search: '../bower_components/lodash/',
+                        replace: function () {
+                            return 'libs/';
+                        },
+                        flags: 'g'
+                    },
+                    {
+                        search: '../bower_components/bootstrap/dist/js/',
+                        replace: function () {
+                            return 'libs/';
+                        },
+                        flags: 'g'
+                    },
+                    {
+                        search: '../bower_components/string-to-color/dist/',
+                        replace: function () {
+                            return 'libs/';
+                        },
+                        flags: 'g'
+                    }
+                ]
+            }
+        },
         eslint: {
             options: {
-                config: '.eslint.json'
+                configFile: '.eslint.json'
             },
-            all: [
-                'Gruntfile.js',
+            target: [
                 '<%= config.app %>/scripts/**/*.js',
-                'test/spec/{,*/}*.js'
+                'Gruntfile.js'
             ]
         },
         mocha: {
@@ -115,230 +248,50 @@ module.exports = function (grunt) {
                     urls: ['http://localhost:<%= connect.test.options.port %>/index.html']
                 }
             }
-        },
-        compass: {
-            options: {
-                sassDir: '<%= config.app %>/styles',
-                cssDir: '.tmp/styles',
-                imagesDir: '<%= config.app %>/images',
-                javascriptsDir: '<%= config.app %>/scripts',
-                fontsDir: '<%= config.app %>/styles/fonts',
-                importPath: '<%= config.app %>/bower_components',
-                relativeAssets: true
-            },
-            dist: {},
-            server: {
-                options: {
-                    debugInfo: true
-                }
-            }
-        },
-        requirejs: {
-            dist: {
-                options: {
-                    baseUrl: '<%= config.app %>/scripts',
-                    optimize: 'none',
-                    dir: '<%= config.dist %>',
-                    paths: {
-                        'jquery': '../../<%= config.app %>/bower_components/jquery/dist/jquery',
-                        'handlebars': '../../<%= config.app %>/bower_components/handlebars/handlebars',
-                        'backbone': '../../<%= config.app %>/bower_components/backbone/backbone',
-                        'lodash': '../../<%= config.app %>/bower_components/lodash/lodash',
-                        'bootstrap': '../../<%= config.app %>/bower_components/bootstrap/dist/js/bootstrap',
-                        'string-to-color': '../../<%= config.app %>/bower_components/string-to-color/dist/string-to-color.umd',
-                        'require': '../../<%= config.app %>/bower_components/requirejs/require'
-                    },
-                    preserveLicenseComments: false,
-                    useStrict: true,
-                    wrap: true
-                }
-            }
-        },
-        useminPrepare: {
-            html: '<%= config.app %>/index.html',
-            options: {
-                dest: '<%= config.dist %>'
-            }
-        },
-        usemin: {
-            html: ['<%= config.dist %>/{,*/}*.html'],
-            css: ['<%= config.dist %>/styles/{,*/}*.css'],
-            options: {
-                dirs: ['<%= config.dist %>']
-            }
-        },
-        imagemin: {
-            dist: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= config.app %>/images',
-                        src: '{,*/}*.{png,jpg,jpeg}',
-                        dest: '<%= config.dist %>/images'
-                    }
-                ]
-            }
-        },
-        cssmin: {
-            dist: {
-                files: {
-                    '<%= config.dist %>/styles/main.css': [
-                        '.tmp/styles/{,*/}*.css',
-                        '<%= config.app %>/styles/{,*/}*.css'
-                    ]
-                }
-            }
-        },
-        htmlmin: {
-            dist: {
-                options: {
-                    /*removeCommentsFromCDATA: true,
-                     collapseWhitespace: true,
-                     collapseBooleanAttributes: true,
-                     removeAttributeQuotes: true,
-                     removeRedundantAttributes: true,
-                     useShortDoctype: true,
-                     removeEmptyAttributes: true,
-                     removeOptionalTags: true*/
-                },
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= config.app %>',
-                        src: '*.html',
-                        dest: '<%= config.dist %>'
-                    }
-                ]
-            }
-        },
-        copy: {
-            dist: {
-                files: [
-                    {
-                        expand: true,
-                        dot: true,
-                        cwd: '<%= config.app %>',
-                        src: [
-                            '*.{ico,txt}',
-                            'images/{,*/}*.{webp,gif}',
-                            'styles/fonts/{,*/}*.*'
-                        ],
-                        dest: '<%= config.dist %>'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        cwd: '<%= config.app %>',
-                        src: ['templates/*.html'],
-                        dest: '<%= config.dist %>/templates'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        cwd: '<%= config.app %>',
-                        src: ['listing-problem.json'],
-                        dest: '<%= config.dist %>/'
-                    },
-                    {
-                        expand: true,
-                        dot: true,
-                        src: ['bouncer/*'],
-                        dest: '<%= config.dist %>/'
-                    }
-                ]
-            },
-            test: {
-                files: [
-                    {
-                        expand: true,
-                        dot: true,
-                        cwd: '<%= config.app %>',
-                        src: [
-                            '*.{ico,txt}',
-                            'images/{,*/}*.{webp,gif}',
-                            'styles/fonts/{,*/}*.*'
-                        ],
-                        dest: '<%= config.dist %>'
-                    }
-                ]
-            }
-        },
-        rev: {
-            dist: {
-                files: {
-                    src: [
-                        '<%= config.dist %>/scripts/{,*/}*.js',
-                        '<%= config.dist %>/styles/{,*/}*.css',
-                        '<%= config.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                        '/styles/fonts/{,*/}*.*',
-                        'bower_components/sass-bootstrap/fonts/*.*'
-                    ]
-                }
-            }
         }
     });
 
     grunt.registerTask('serve', function (target) {
-        var tasksToRun;
+        var tasksToRun = [
+            'clean:server',
+            'sass:app',
+            'connect:app:keepalive'
+        ];
+
         if (target === 'dist') {
             tasksToRun = [
                 'build',
-                'open:server',
                 'connect:dist:keepalive'
             ];
         }
         else if (target === 'test') {
             tasksToRun = [
                 'clean:server',
-                'compass:server',
-                'connect:test',
-                'open:test',
-                'watch'
-            ];
-        }
-        else {
-            // TODO geht nicht
-            tasksToRun = [
-                'clean:server',
-                'compass:server',
-                'connect:livereload',
-                'open:server',
-                'watch'
+                'connect:testOpen',
+                'mocha'
             ];
         }
 
         grunt.task.run(tasksToRun);
     });
 
-    grunt.registerTask('test', function (isConnected) {
-        var testTasks = [
-            'clean:server',
-            'compass',
-            'connect:test',
-            'mocha'
-        ];
-
-        if (Boolean(isConnected)) {
-            testTasks.splice(testTasks.indexOf('connect:test'), 1);
-        }
-        return grunt.task.run(testTasks);
-    });
-
     grunt.registerTask('build', [
+        'test',
         'clean:dist',
-        'compass:dist',
-        'useminPrepare',
-        'requirejs',
-        'imagemin',
-        'htmlmin',
-        'cssmin',
         'copy',
-        'rev',
-        'usemin'
+        'regex-replace:dist-index',
+        'regex-replace:dist-main',
+        'sass:dist'
+    ]);
+
+    grunt.registerTask('test', [
+        'eslint',
+        'clean:server',
+        'connect:test',
+        'mocha'
     ]);
 
     grunt.registerTask('default', [
-        'eslint',
         'test',
         'build'
     ]);
