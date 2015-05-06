@@ -2,7 +2,6 @@ define([
     'backbone',
     'template-manager/template-manager'
 ], function (Backbone, templateManager) {
-    'use strict';
 
     var DashboardView = Backbone.View.extend({
 
@@ -21,7 +20,7 @@ define([
             'use strict';
             return new DashboardView(options);
         },
-        
+
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
         }

@@ -1,6 +1,5 @@
 define([], function () {
-    'use strict';
-    return  {
+    return {
         isDefined: function (toBeDefined, what) {
             'use strict';
             if (!toBeDefined) {

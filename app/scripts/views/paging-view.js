@@ -4,7 +4,6 @@ define([
     'string-to-color',
     'services/defined-checker'
 ], function (Backbone, templateManager, stringToColor, definedChecker) {
-    'use strict';
 
     var PagingView = Backbone.View.extend({
 
