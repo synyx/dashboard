@@ -36,6 +36,31 @@ module.exports = function (grunt) {
                     },
                     open: 'http://localhost:<%= connect.options.port %>'
                 }
+            },
+            test: {
+                options: {
+                    port: 9001,
+                    middleware: function (connect) {
+                        return [
+                            connect.static(require('path').resolve('.tmp')),
+                            connect.static(require('path').resolve('test')),
+                            connect.static(require('path').resolve(config.app))
+                        ];
+                    }
+                }
+            },
+            testOpen: {
+                options: {
+                    port: 9001,
+                    middleware: function (connect) {
+                        return [
+                            connect.static(require('path').resolve('.tmp')),
+                            connect.static(require('path').resolve('test')),
+                            connect.static(require('path').resolve(config.app))
+                        ];
+                    },
+                    open: 'http://localhost:<%= connect.test.options.port %>'
+                }
             }
         },
         clean: {
@@ -212,6 +237,17 @@ module.exports = function (grunt) {
                 '<%= config.app %>/scripts/**/*.js',
                 'Gruntfile.js'
             ]
+        },
+        mocha: {
+            all: {
+                options: {
+                    log: true,
+                    reporter: 'Spec',
+                    run: false,
+                    timeout: 10000,
+                    urls: ['http://localhost:<%= connect.test.options.port %>/index.html']
+                }
+            }
         }
     });
 
@@ -228,6 +264,13 @@ module.exports = function (grunt) {
                 'connect:dist:keepalive'
             ];
         }
+        else if (target === 'test') {
+            tasksToRun = [
+                'clean:server',
+                'connect:testOpen',
+                'mocha'
+            ];
+        }
 
         grunt.task.run(tasksToRun);
     });
@@ -242,10 +285,14 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('test', [
-        'eslint'
+        'eslint',
+        'clean:server',
+        'connect:test',
+        'mocha'
     ]);
 
     grunt.registerTask('default', [
+        'test',
         'build'
     ]);
 };
