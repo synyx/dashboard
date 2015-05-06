@@ -86,8 +86,6 @@ table tbody tr td {
   border: 1px solid white;
   text-align: left;
   vertical-align: middle; }
-table tbody tr:hover {
-  background-color: #6ab023; }
 
 .center {
   margin: 0 auto; }
