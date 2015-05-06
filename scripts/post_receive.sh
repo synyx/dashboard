@@ -54,9 +54,4 @@ perl ~/dashboard/scripts/beertime.pl > ~/public_html/content/generated/bier.json
 #~/dashboard/scripts/wetter.pl > ~/public_html/content/generated/weather.json
 ~/dashboard/scripts/fetch_all.sh
 
-
 bundle exec rake deploy:listing
-
-
-
-
