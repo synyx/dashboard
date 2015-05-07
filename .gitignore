@@ -6,6 +6,7 @@ npm-debug.log
 
 .sass-cache
 .tmp
+dist/
 app/bower_components
 test/temp
 test/bower_components
