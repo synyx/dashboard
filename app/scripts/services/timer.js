@@ -1,6 +1,7 @@
 define([
-    'backbone'
-], function (Backbone) {
+    'backbone',
+    'underscore'
+], function (Backbone, _) {
     'use strict';
 
     var tick = 50; // every ${tick}ms

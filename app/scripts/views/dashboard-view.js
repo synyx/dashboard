@@ -1,5 +1,6 @@
 define([
     'backbone',
+    'underscore',
     'views/control-view',
     'views/paging-view',
     'views/time-line-view',
@@ -7,7 +8,7 @@ define([
     'views/header-view',
     'template-manager/template-manager',
     'services/defined-checker'
-], function (Backbone, ControlView, PagingView, TimeLineView, ContentView, HeaderView, templateManager, definedChecker) {
+], function (Backbone, _, ControlView, PagingView, TimeLineView, ContentView, HeaderView, templateManager, definedChecker) {
     'use strict';
 
     return Backbone.View.extend({

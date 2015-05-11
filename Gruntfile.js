@@ -11,10 +11,33 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         config: config,
+        watch: {
+            options: {
+                spawn: false,
+                livereload: true
+            },
+            sass: {
+                files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
+                tasks: ['sass:app']
+            },
+            app: {
+                files: [
+                    '<%= config.app %>/*.html',
+                    '{.tmp,<%= config.app %>}/styles/{,*/}*.css',
+                    '{.tmp,<%= config.app %>}/scripts/{,*/}*.js',
+                    'test/spec/{,*/}*.js'
+                ]
+            },
+            test: {
+                files: ['<%= config.app %>/scripts/{,*/}*.js', 'test/spec/{,*/}*.js'],
+                tasks: ['test:true']
+            }
+        },
         connect: {
             options: {
                 port: 9000,
-                hostname: 'localhost'
+                hostname: 'localhost',
+                livereload: 35729
             },
             app: {
                 options: {
@@ -252,27 +275,28 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('serve', function (target) {
-        var tasksToRun = [
+        var tasks = [
             'clean:server',
             'sass:app',
-            'connect:app:keepalive'
+            'connect:app',
+            'watch'
         ];
 
         if (target === 'dist') {
-            tasksToRun = [
+            tasks = [
                 'build',
                 'connect:dist:keepalive'
             ];
         }
         else if (target === 'test') {
-            tasksToRun = [
+            tasks = [
                 'clean:server',
                 'connect:testOpen',
-                'mocha'
+                'watch'
             ];
         }
 
-        grunt.task.run(tasksToRun);
+        grunt.task.run(tasks);
     });
 
     grunt.registerTask('build', [
@@ -283,14 +307,23 @@ module.exports = function (grunt) {
         'sass:dist'
     ]);
 
-    grunt.registerTask('test', [
-        'eslint',
-        'clean:server',
-        'connect:test',
-        'mocha'
-    ]);
+    grunt.registerTask('test', function(isConnected) {
+        var tasks = [
+            'clean:server',
+            'connect:test',
+            'mocha'
+        ];
+
+        if(isConnected){
+            tasks.splice(tasks.indexOf('connect:test'), 1);
+            tasks.splice(tasks.indexOf('mocha'), 1);
+        }
+
+        grunt.task.run(tasks);
+    });
 
     grunt.registerTask('default', [
+        'eslint',
         'test',
         'build'
     ]);

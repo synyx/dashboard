@@ -1,7 +1,8 @@
 define([
     'backbone',
+    'underscore',
     'template-manager/template-manager'
-], function (Backbone, templateManager) {
+], function (Backbone, _, templateManager) {
 
     var HeaderView = Backbone.View.extend({
 

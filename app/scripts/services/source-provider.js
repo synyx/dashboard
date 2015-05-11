@@ -1,11 +1,12 @@
 define([
     'backbone',
+    'underscore',
     'models/source',
     'models/sources',
     'models/header',
     'models/content',
     'services/defined-checker'
-], function (Backbone, Source, Sources, Header, Content, definedChecker) {
+], function (Backbone, _, Source, Sources, Header, Content, definedChecker) {
     'use strict';
 
     return Backbone.Model.extend({
@@ -39,7 +40,7 @@ define([
             var sources = new Sources();
 
             var that = this;
-            _.forEach(listings, function (listing) {
+            listings.forEach(function (listing) {
 
                 var source = new Source({
                     url: that.contentUrl + listing

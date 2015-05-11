@@ -1,5 +1,6 @@
 define([
     'backbone',
+    'underscore',
     'jquery',
     'models/source',
     'models/sources',
@@ -10,8 +11,9 @@ define([
     'views/dashboard-view',
     'services/source-provider',
     'services/source-filter',
+    'services/source-statistics',
     'services/timer'
-], function (Backbone, $, SourceModel, Sources, StatusModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, Timer) {
+], function (Backbone, _, $, SourceModel, Sources, StatusModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, statistics, Timer) {
     'use strict';
 
     return Backbone.Model.extend({
@@ -64,17 +66,7 @@ define([
         filter: function (sources) {
             var filteredSources = this.sourceFilter.filter(sources);
             if (filteredSources.size() === 0) {
-                var tags = filteredSources.pluck('tags').join('; ');
-                filteredSources.add(new SourceModel({
-                        header: new HeaderModel({name: 'Sorry, no content there...'}),
-                        content: new ContentModel({
-                            content: 'No content is coming back (maybe after filtering).<br/><br/> ' +
-                                'Tag-String used: <b>' + this.get('providedStringTags') + '</b><br/><br/>' +
-                                'There were ' + filteredSources.size() + ' entries in the unfiltered list with tags : ' + tags
-                        }),
-                        importance: 1000
-                    })
-                );
+                filteredSources.add(statistics.sources(sources, this.get('providedStringTags')));
             }
             return filteredSources;
         },

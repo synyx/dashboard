@@ -1,8 +1,9 @@
 define([
     'backbone',
+    'underscore',
     'template-manager/template-manager',
     'services/defined-checker'
-], function (Backbone, templateManager, definedChecker) {
+], function (Backbone, _, templateManager, definedChecker) {
 
     var TimeLineView = Backbone.View.extend({
 

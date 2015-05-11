@@ -26,12 +26,13 @@ define([
         initFromTags: function (tags) {
             var that = this;
 
-            _.each(tags, function (tag) {
+            tags.forEach(function (tag) {
                 console.log('Adding filter for tag = ' + tag);
+
                 var tagFunction;
                 if (typeof tag === 'string') {
                     tagFunction = function (content) {
-                        return _.any(content.getTags(), function (contentTag) {
+                        return content.getTags().some(function (contentTag) {
                             return tag === contentTag;
                         });
                     };
@@ -41,7 +42,7 @@ define([
                     tagFunction = function (content) {
                         var contentTags = content.getTags();
 
-                        return _.all(tag, function (tagX) {
+                        return tag.every(function (tagX) {
                             return $.inArray(tagX, contentTags) !== -1;
                         });
                     };
@@ -53,11 +54,11 @@ define([
         prepareStringTags: function (stringTags) {
             var ors = stringTags.split('-');
             var orArray = [];
-            _.each(ors, function (or) {
+            ors.forEach(function (or) {
                 var ands = or.split('+');
 
                 var andArray = [];
-                _.each(ands, function (and) {
+                ands.forEach(function (and) {
                     andArray.push(and);
                 });
 
@@ -85,7 +86,7 @@ define([
             }
 
             var anyMatch = false;
-            _.each(this.get('rules'), function (rule) {
+            this.get('rules').forEach(function (rule) {
                 if (rule(content)) {
                     anyMatch = true;
                 }
