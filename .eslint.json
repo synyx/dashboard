@@ -9,8 +9,5 @@
         "quotes": [2, "single"],
         "no-use-before-define": [2, "nofunc"],
         "no-multiple-empty-lines": [2, {"max": 1}]
-    },
-    "globals": {
-        "_": true
     }
 }
