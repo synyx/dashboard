@@ -16,7 +16,7 @@ define([
 ], function (Backbone, _, $, SourceModel, Sources, StatusModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, statistics, Timer) {
     'use strict';
 
-    return Backbone.Model.extend({
+    var DashboardApp = Backbone.Model.extend({
 
         defaults: {
             contentUrl: undefined,
@@ -51,15 +51,22 @@ define([
             this.render();
         },
 
+        create: function (options) {
+            return new DashboardApp(options);
+        },
+
         render: function () {
-            new DashboardView({
+
+            var model = new DashboardModel({
+                headerModel: this.get('headerModel'),
+                contentModel: this.get('contentModel'),
+                statusModel: this.get('statusModel'),
+                sources: this.get('sources')
+            });
+
+            DashboardView.prototype.create({
                 el: $('#dashboard'),
-                model: new DashboardModel({
-                    headerModel: this.get('headerModel'),
-                    contentModel: this.get('contentModel'),
-                    statusModel: this.get('statusModel'),
-                    sources: this.get('sources')
-                })
+                model: model
             });
         },
 
@@ -119,4 +126,6 @@ define([
             return ((n1 % n2) + n2) % n2;
         }
     });
+
+    return DashboardApp;
 });

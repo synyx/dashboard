@@ -11,7 +11,7 @@ define([
 ], function (Backbone, _, ControlView, PagingView, TimeLineView, ContentView, HeaderView, templateManager, definedChecker) {
     'use strict';
 
-    return Backbone.View.extend({
+    var DashboardView = Backbone.View.extend({
 
         templateName: 'DashboardView',
 
@@ -24,6 +24,10 @@ define([
 
             this.render();
             this.renderChildren();
+        },
+
+        create: function (options) {
+            return new DashboardView(options);
         },
 
         render: function () {
@@ -59,4 +63,6 @@ define([
             });
         }
     });
+
+    return DashboardView;
 });

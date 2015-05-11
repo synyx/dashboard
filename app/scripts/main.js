@@ -34,7 +34,7 @@ require([
         tags = tags.substr(1);
     }
 
-    new DashboardApp({
+    DashboardApp.prototype.create({
         listingUrl: './listing.json',
         contentUrl: './',
         providedStringTags: tags
