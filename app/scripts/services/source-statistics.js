@@ -19,7 +19,7 @@ define([
                         tagEntry.names.push(sourceName);
                     }
                     else {
-                        tagMap[tag] = {count: 1, names: [sourceName]}
+                        tagMap[tag] = {count: 1, names: [sourceName]};
                     }
                 });
             });
