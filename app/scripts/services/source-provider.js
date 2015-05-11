@@ -1,11 +1,12 @@
 define([
     'backbone',
+    'underscore',
     'models/source',
     'models/sources',
     'models/header',
     'models/content',
     'services/defined-checker'
-], function (Backbone, Source, Sources, Header, Content, definedChecker) {
+], function (Backbone, _, Source, Sources, Header, Content, definedChecker) {
     'use strict';
 
     return Backbone.Model.extend({

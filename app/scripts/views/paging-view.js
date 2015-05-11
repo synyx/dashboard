@@ -1,9 +1,10 @@
 define([
     'backbone',
+    'underscore',
     'template-manager/template-manager',
     'string-to-color',
     'services/defined-checker'
-], function (Backbone, templateManager, stringToColor, definedChecker) {
+], function (Backbone, _, templateManager, stringToColor, definedChecker) {
 
     var PagingView = Backbone.View.extend({
 

@@ -1,5 +1,6 @@
 define([
     'backbone',
+    'underscore',
     'jquery',
     'models/source',
     'models/sources',
@@ -11,7 +12,7 @@ define([
     'services/source-provider',
     'services/source-filter',
     'services/timer'
-], function (Backbone, $, SourceModel, Sources, StatusModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, Timer) {
+], function (Backbone, _, $, SourceModel, Sources, StatusModel, HeaderModel, ContentModel, DashboardModel, DashboardView, SourceProvider, SourceFilter, Timer) {
     'use strict';
 
     return Backbone.Model.extend({
