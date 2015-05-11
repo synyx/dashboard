@@ -40,7 +40,7 @@ define([
             var sources = new Sources();
 
             var that = this;
-            _.forEach(listings, function (listing) {
+            listings.forEach(function (listing) {
 
                 var source = new Source({
                     url: that.contentUrl + listing
