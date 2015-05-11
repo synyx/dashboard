@@ -4,7 +4,6 @@ require.config({
     paths: {
         jquery: '../bower_components/jquery/dist/jquery',
         backbone: '../bower_components/backbone/backbone',
-        handlebars: '../bower_components/handlebars/handlebars',
         lodash: '../bower_components/lodash/lodash',
         'string-to-color': '../bower_components/string-to-color/dist/string-to-color.umd'
     },
