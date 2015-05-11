@@ -6,7 +6,7 @@
         "jquery": "~2.1.4",
         "requirejs": "~2.1.17",
         "backbone": "~1.1.2",
-        "lodash": "~3.5.0",
+        "lodash": "~3.8.0",
         "bootstrap": "~3.3.4",
         "handlebars": "~3.0.0",
         "string-to-color": "1.0.1"
