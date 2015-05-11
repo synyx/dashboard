@@ -3,6 +3,7 @@ define([
     'underscore',
     'template-manager/template-manager'
 ], function (Backbone, _, templateManager) {
+    'use strict';
 
     var HeaderView = Backbone.View.extend({
 
@@ -18,7 +19,6 @@ define([
         },
 
         create: function (options) {
-            'use strict';
             return new HeaderView(options);
         },
 

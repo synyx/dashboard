@@ -4,6 +4,7 @@ define([
     'template-manager/template-manager',
     'services/defined-checker'
 ], function (Backbone, _, templateManager, definedChecker) {
+    'use strict';
 
     var TimeLineView = Backbone.View.extend({
 
@@ -21,7 +22,6 @@ define([
         },
 
         create: function (options) {
-            'use strict';
             return new TimeLineView(options);
         },
 

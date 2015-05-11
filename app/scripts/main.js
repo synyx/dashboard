@@ -24,6 +24,7 @@ require([
     'backbone',
     'dashboard-app'
 ], function (Backbone, DashboardApp) {
+    'use strict';
     Backbone.history.start();
 
     var tags = window.location.search;
