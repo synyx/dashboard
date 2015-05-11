@@ -11,10 +11,29 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         config: config,
+        watch: {
+            options: {
+                spawn: false,
+                livereload: true
+            },
+            sass: {
+                files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
+                tasks: ['sass:app']
+            },
+            app: {
+                files: [
+                    '<%= config.app %>/*.html',
+                    '{.tmp,<%= config.app %>}/styles/{,*/}*.css',
+                    '{.tmp,<%= config.app %>}/scripts/{,*/}*.js',
+                    'test/spec/{,*/}*.js'
+                ]
+            }
+        },
         connect: {
             options: {
                 port: 9000,
-                hostname: 'localhost'
+                hostname: 'localhost',
+                livereload: 35729
             },
             app: {
                 options: {
@@ -252,27 +271,29 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('serve', function (target) {
-        var tasksToRun = [
+        var tasks = [
             'clean:server',
             'sass:app',
-            'connect:app:keepalive'
+            'connect:app',
+            'watch'
         ];
 
         if (target === 'dist') {
-            tasksToRun = [
+            tasks = [
                 'build',
                 'connect:dist:keepalive'
             ];
         }
         else if (target === 'test') {
-            tasksToRun = [
+            tasks = [
                 'clean:server',
                 'connect:testOpen',
-                'mocha'
+                'mocha',
+                'watch'
             ];
         }
 
-        grunt.task.run(tasksToRun);
+        grunt.task.run(tasks);
     });
 
     grunt.registerTask('build', [
