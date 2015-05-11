@@ -121,6 +121,14 @@ table {
   }
 }
 
+.table-small {
+  tbody {
+    tr td {
+      padding: 5px;
+    }
+  }
+}
+
 // Predefined classes for the jsons
 .center {
   margin: 0 auto;
