@@ -9,7 +9,7 @@
         "requirejs": "~2.1.16",
         "modernizr": "~2.8.3",
         "handlebars": "~3.0.0",
-        "string-to-color": "^1.0.2"
+        "string-to-color": "1.0.1"
     },
     "devDependencies": {
     }
