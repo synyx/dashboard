@@ -29,8 +29,7 @@ module.exports = function (grunt) {
                 ]
             },
             test: {
-                files: ['<%= config.app %>/scripts/{,*/}*.js', 'test/spec/{,*/}*.js'],
-                tasks: ['test:true']
+                files: ['<%= config.app %>/scripts/{,*/}*.js', 'test/spec/{,*/}*.js']
             }
         },
         connect: {
@@ -307,20 +306,11 @@ module.exports = function (grunt) {
         'sass:dist'
     ]);
 
-    grunt.registerTask('test', function(isConnected) {
-        var tasks = [
-            'clean:server',
-            'connect:test',
-            'mocha'
-        ];
-
-        if(isConnected){
-            tasks.splice(tasks.indexOf('connect:test'), 1);
-            tasks.splice(tasks.indexOf('mocha'), 1);
-        }
-
-        grunt.task.run(tasks);
-    });
+    grunt.registerTask('test', [
+        'clean:server',
+        'connect:test',
+        'mocha'
+    ]);
 
     grunt.registerTask('default', [
         'eslint',
