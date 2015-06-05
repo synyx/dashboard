@@ -1,7 +1,7 @@
 define([
-    './source',
-    './header',
-    './content'
+    'models/source',
+    'models/header',
+    'models/content'
 ], function (SourceModel, HeaderModel, ContentModel) {
     'use strict';
 

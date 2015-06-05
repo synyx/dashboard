@@ -1,9 +1,9 @@
 define([
     'backbone',
     'underscore',
-    './template-manager',
+    'template-manager/template-manager',
     'string-to-color',
-    './defined-checker'
+    'services/defined-checker'
 ], function (Backbone, _, templateManager, stringToColor, definedChecker) {
     'use strict';
 

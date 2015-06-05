@@ -1,8 +1,8 @@
 define([
     'backbone',
     'jquery',
-    '/header',
-    '/content'
+    'models/header',
+    'models/content'
 ], function (Backbone, $, Header, Content) {
     'use strict';
 

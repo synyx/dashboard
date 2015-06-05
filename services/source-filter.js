@@ -1,7 +1,7 @@
 define([
     'backbone',
     'underscore',
-    './sources'
+    'models/sources'
 ], function (Backbone, _, Sources) {
     'use strict';
 

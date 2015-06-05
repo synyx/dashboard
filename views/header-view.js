@@ -1,7 +1,7 @@
 define([
     'backbone',
     'underscore',
-    './template-manager'
+    'template-manager/template-manager'
 ], function (Backbone, _, templateManager) {
     'use strict';
 

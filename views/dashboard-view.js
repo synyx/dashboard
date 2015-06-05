@@ -1,13 +1,13 @@
 define([
     'backbone',
     'underscore',
-    '/control-view',
-    '/paging-view',
-    '/time-line-view',
-    '/content-view',
-    '/header-view',
-    './template-manager',
-    './defined-checker'
+    'views/control-view',
+    'views/paging-view',
+    'views/time-line-view',
+    'views/content-view',
+    'views/header-view',
+    'template-manager/template-manager',
+    'services/defined-checker'
 ], function (Backbone, _, ControlView, PagingView, TimeLineView, ContentView, HeaderView, templateManager, definedChecker) {
     'use strict';
 
