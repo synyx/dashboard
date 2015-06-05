@@ -1,6 +1,0 @@
-{
-    "directory": "bower_components",
-    "scripts": {
-        "postinstall": "rm -rf bower_components/underscore"
-    }
-}

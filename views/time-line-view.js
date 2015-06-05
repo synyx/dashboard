@@ -1,0 +1,42 @@
+define([
+    'backbone',
+    'underscore',
+    './template-manager',
+    './defined-checker'
+], function (Backbone, _, templateManager, definedChecker) {
+    'use strict';
+
+    var TimeLineView = Backbone.View.extend({
+
+        templateName: 'TimeLineView',
+
+        initialize: function () {
+            definedChecker.isDefined(this.model, 'model');
+
+            _.bindAll(this, 'render', 'drawBar');
+
+            this.template = templateManager.getTemplate(this.templateName);
+
+            this.listenTo(this.model, 'change', this.drawBar);
+            this.render();
+        },
+
+        create: function (options) {
+            return new TimeLineView(options);
+        },
+
+        render: function () {
+            this.$el.html(this.template());
+        },
+
+        drawBar: function () {
+            var secondsLeft = this.model.get('secondsLeft');
+            var seconds = this.model.get('seconds');
+            this.$('.content-timer-line').css({
+                width: ((seconds - secondsLeft) / seconds) * 100 + '%'
+            });
+        }
+    });
+
+    return TimeLineView;
+});
