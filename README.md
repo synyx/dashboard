@@ -75,7 +75,7 @@ For example the content/table.json
 * `content`
     * holds the information which will be shown on the dashboard
     * html, css, ... is allowed
-* `importance` optional
+* `importance` (optional)
     * provides the information on how long should this information be displayed
 * `tags`
     * is there to create specific dashboard with a custom selection of content
