@@ -1,4 +1,5 @@
 .sass-cache
+.tmp
 dist/
 app/bower_components
 test/bower_components
