@@ -12,7 +12,7 @@ http://synyx.github.io/dashboard/
 
 It is very easy to setup this dashboard. All you need is node installed (https://nodejs.org/)
 
-Then you just go to the `/dashboard` directory and type `grunt`.
+Then you just go to the `/dashboard` directory, execute `npm install` and type `grunt`.
 This will run all the tests and will create a directory `dist/` with the fully functional javascript application.
 
 If you are not familiar with grunt then take your time and get some information about it on http://gruntjs.com/
