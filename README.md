@@ -2,7 +2,9 @@
 
 # Dashboard
 
+## Demo
 
+http://synyx.github.io/dashboard/
 
 ## License
 
