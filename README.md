@@ -90,7 +90,7 @@ For example the content/table.json
 
 As mentioned in the JSON Format section you can create your own custom dashboard show by tags.
 
-For example these two json files are available.
+For example these three json files are available.
 
 <pre>
 {
@@ -105,6 +105,14 @@ For example these two json files are available.
     "name": "Second",
     "content": "second"
     "tags": ["second", "information"],
+}
+</pre>
+
+<pre>
+{
+    "name": "Third",
+    "content": "third"
+    "tags": ["information"],
 }
 </pre>
 
