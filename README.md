@@ -52,9 +52,7 @@ All JSON files have to be provided in a `listing.json` in the root directory.
     "content/centered-div.json",
     "content/responsive-image.json",
     "content/long-text.json",
-    "content/fifth.json",
-    "content/kvv.json",
-    "content/content.json"
+    "content/fifth.json"
 ]
 </pre>
 
