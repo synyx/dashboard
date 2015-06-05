@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/synyx/dashboard.svg?branch=master)](https://travis-ci.org/synyx/dashboard)
+[![Build Status](https://travis-ci.org/synyx/dashboard.svg?branch=master)](https://travis-ci.org/synyx/dashboard) [![devDependency Status](https://david-dm.org/synyx/dashboard/dev-status.svg)](https://david-dm.org/synyx/dashboard#info=devDependencies)
 
 # Dashboard
 
