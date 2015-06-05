@@ -63,15 +63,10 @@ All JSON files have to be provided in a `listing.json` in the root directory.
 For example the content/table.json
 <pre>
 {
-    "name": "Responsive table, you know?",
-    "content": "<div class=\"table-responsive\">
-                <table>
-                    <thead><tr><th>Header</th><th>Header</th><th>Header</th></tr></thead>
-                    <tbody><tr><td>Cell</td><td>Cell</td><td>Cell</td></tr><tr><td>Cell</td><td>Cell</td><td>Cell</td></tr></tbody>
-                </table>
-                </div>"
+    "name": "Name of the slide",
+    "content": "Content if the slide"
     "importance": 1,
-    "tags": ["responsive", "table"],
+    "tags": ["awesome", "slide"],
 }
 </pre>
 
