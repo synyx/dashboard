@@ -151,13 +151,6 @@ module.exports = function (grunt) {
                             'requirejs/require.js'
                         ],
                         dest: '<%= config.dist %>/libs'
-                    },
-                    {
-                        expand: true,
-                        dot: true,
-                        cwd: 'bouncer',
-                        src: ['{,*/}*'],
-                        dest: '<%= config.dist %>/bouncer'
                     }
                 ]
             }
