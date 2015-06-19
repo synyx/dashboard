@@ -67,7 +67,6 @@ define([
         bindKeyPress: function () {
             var that = this;
             $(document).keydown(function (event) {
-                event.preventDefault();
                 switch (event.keyCode) {
                     case 37:
                         that.prev();
@@ -76,6 +75,7 @@ define([
                         that.next();
                         break;
                     case 32:
+                        event.preventDefault();
                         that.pauseOrPlay();
                         break;
                 }
