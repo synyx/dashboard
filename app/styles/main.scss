@@ -8,7 +8,7 @@ $table-content-background-color: #6ab023;
 $table-border-color: white;
 
 html, body {
-  font-family: 'Fjalla One', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   background-color: $content-background-color;
 }
@@ -24,6 +24,7 @@ html, body {
 }
 
 .header {
+  font-family: 'Julius Sans One';
   padding: 0 0.2vh;
   background-color: $header-background-color;
   font-size: 4.5vmax;
