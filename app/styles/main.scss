@@ -1,10 +1,9 @@
-$header-background-color: #b2c900;
-$header-text-shadow-color: #636363;
-$header-inactive-color: #90a300;
+$header-background-color: #efeae1;
+$header-controls-color: #d0cbc4;
 $content-background-color: #efeae1;
-$time-line-color: #90a300;
+$time-line-color: #1b1e00;
 
-$table-header-background-color: #b2c900;
+$table-header-background-color: #e0d7db;
 $table-content-background-color: #6ab023;
 $table-border-color: white;
 
@@ -16,6 +15,10 @@ html, body {
 
 /* Header */
 
+.full-header {
+  border-bottom: 1pt solid black;
+}
+
 #header-container {
   line-height: 4.5vmax;
 }
@@ -25,7 +28,6 @@ html, body {
   background-color: $header-background-color;
   font-size: 4.5vmax;
   text-align: center;
-  text-shadow: -2px 2px 3px $header-text-shadow-color;
 }
 
 /* Content */
@@ -47,7 +49,7 @@ html, body {
 /* Controls */
 .control-container {
   padding: 0 1vh;
-  color: $header-inactive-color;
+  color: $header-controls-color;
   background-color: $header-background-color;
   font-size: 2.5vmax;
   text-align: center;
@@ -57,7 +59,6 @@ html, body {
 
 .control-container:hover {
   color: #ffffff;
-  text-shadow: -2px 2px 3px $header-text-shadow-color;
 }
 
 /* Footer */
@@ -74,7 +75,6 @@ html, body {
 
 /* Time line */
 .time-line-container {
-  height: 0.5vh;
 }
 
 /* Paging */
