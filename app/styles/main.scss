@@ -11,6 +11,7 @@ html, body {
   font-family: 'Open Sans', sans-serif;
   font-size: 17px;
   background-color: $content-background-color;
+  height: 100%;
 }
 
 /* Header */
@@ -32,14 +33,19 @@ html, body {
 }
 
 /* Content */
+.content-row {
+  height: 85%;
+}
 .content-container {
   font-size: 1.5em;
+  height: 100%;
 }
 
 .content {
   margin-top: 3vh;
   margin-bottom: 3vh;
   padding: 0 1vmax;
+  height: 100%;
 }
 
 .content-timer-line {
@@ -60,6 +66,10 @@ html, body {
 
 .control-container:hover {
   color: #ffffff;
+}
+
+.container-fluid {
+  height: 100%;
 }
 
 /* Footer */
