@@ -12,7 +12,7 @@ else
 fi
 
 echo -e "running grunt…\n"
-/usr/local/node/node-default/bin/grunt
+node_modules/grunt-cli/bin/grunt
 if [ $? -eq 0 ];then
   echo -e "SUCCESSFUL\n"
 else
